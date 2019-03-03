@@ -1,0 +1,147 @@
+#root{
+    width: 1140px;
+    margin: 0 auto;
+}
+
+.hello{
+    float: right;
+}
+.link{
+    padding: 20px 20px;
+
+}
+
+.linkActive{
+    background: #28a745;
+    border-top-left-radius:15px;
+    border-top-right-radius:15px;
+}
+.link button{
+    background: rgba(0,0,0,0);
+}
+.title{
+    padding: 30px 0;
+    font-size: 20px;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+#myTab{
+    position: relative;
+}
+.addBtn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.repaireBtn{
+    max-width: 47px;
+    min-width: 50px;
+}
+.my_tbody_pub td{
+    height: 80px;
+    overflow: hidden;
+}
+.my_tbody_pub td:nth-child(1){
+    width: 20%;
+}
+.my_tbody_pub td:nth-child(2){
+    width: 20%;
+}
+.my_tbody_pub td:nth-child(3){
+    width: 20%;
+}
+.my_tbody_pub td:nth-child(4){
+    width: 6%;
+}
+.my_tbody_pub td:nth-child(5){
+    width: 6%;
+}
+.my_tbody_pub td{
+    height: 80px;
+    overflow: hidden;
+}
+.my_tbody_pro td:nth-child(1){
+    width: 15%;
+}
+.my_tbody_pro td:nth-child(2){
+    width: 15%;
+}
+.my_tbody_pro td:nth-child(3){
+    width: 15%;
+}
+.my_tbody_pro td:nth-child(4){
+    width: 15%;
+}
+.my_tbody_pro td:nth-child(5){
+    width: 6%;
+}
+.my_tbody_pro td:nth-child(6){
+    width: 6%;
+}
+
+
+.message_file input{
+    display:  flex;
+    border: 1px solid #e5e9ed;
+    box-shadow: none;
+    width: 100%;
+}
+.edit_id_pro{
+    float: right;
+}
+
+/*图片上传*/
+/* 配合样式可以做出上传按钮和示例效果 */
+.ant-upload-select-picture-card i {
+    font-size: 28px;
+    color: #999;
+}
+
+.ant-upload-select-picture-card .ant-upload-text {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #666;
+}
+
+.upload-example {
+    position: relative;
+    display: inline-block;
+    height: 96px;
+    width: 96px;
+    padding: 8px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    vertical-align: top;
+}
+
+.upload-example img {
+    height: 78px;
+    width: 78px;
+}
+
+.upload-example:before {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    content: ' ';
+    width: 78px;
+    height: 24px;
+    background-color: #808080;
+    opacity: .8;
+}
+
+.upload-example span {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    width: 78px;
+    height: 24px;
+    color: #fff;
+    line-height: 24px;
+    text-align: center;
+}
+/*图片上传样式结束*/
+.ant-upload-list-item-thumbnail img{
+    width: 50px;
+    height: 50px;
+}

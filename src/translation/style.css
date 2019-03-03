@@ -1,0 +1,61 @@
+/*.show{*/
+    /*animation: show-item 2s ease-in forwards;*/
+/*}*/
+/*.hide{*/
+    /*!*opacity: 0;*!*/
+    /*!*transition: all 1s ease-in;*!*/
+    /*animation: hide-item 2s ease-in forwards;*/
+/*}*/
+/*@keyframes show-item {*/
+    /*0%{*/
+        /*opacity: 0;*/
+        /*color: blue;*/
+    /*}*/
+    /*50%{*/
+        /*opacity: 0.5;*/
+        /*color: green;*/
+    /*}*/
+    /*100%{*/
+        /*opacity: 1;*/
+        /*color: red;*/
+    /*}*/
+/*}*/
+/*@keyframes hide-item {*/
+    /*0%{*/
+        /*opacity: 1;*/
+        /*color: red;*/
+    /*}*/
+    /*50%{*/
+        /*opacity: 0.5;*/
+        /*color: green;*/
+    /*}*/
+    /*100%{*/
+        /*opacity: 0;*/
+        /*color: blue;*/
+    /*}*/
+/*}*/
+
+.test-enter .test-appear{
+    opacity: 0;
+}
+.test-enter-active .test-appear-active{
+    opacity: 1;
+    transition: opacity 1s ease-in;
+}
+.test-enter-done{
+    opacity: 1;
+
+}
+
+.test-exit{
+    opacity: 1;
+}
+.test-exit-active{
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+.test-exit-done{
+    opacity: 0;
+
+}
+
