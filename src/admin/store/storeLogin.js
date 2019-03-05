@@ -2,13 +2,6 @@ import {observable,action,computed} from "mobx";
 import axios from 'axios';
 
 class StoreLogin {
-    constructor(){
-
-        axios.get('/admin/checkLogin')
-            .then((res)=>{
-                this.logined = res.data.isLogined;
-            });
-    }
     @observable loginInputBox = {
         inputName: '',
         inputPassword: '',
@@ -18,7 +11,6 @@ class StoreLogin {
     loginInputBoxInput=(key,value)=>{
         this.loginInputBox[key]=value;
     };
-    @observable logined = false;
     handleLogin=()=>{
         console.log(this.loginInputBox.inputName, '提交数据');
         axios.post('/admin/login',this.loginInputBox)
@@ -36,27 +28,34 @@ class StoreLogin {
                 alert("密码错误ssdf")
             });
     };
-    isAdmin = (nextState, replaceState) =>{
-        this.sleep(10);
-        if (this.logined){
-            // replaceState({ pathname: '/login' });
-        }
-        else{
-            console.log("跳转");
-            replaceState({ pathname: '/login' });
-        }
+    isAdmin = (nextState, replaceState,cd) =>{
+        axios.get('/admin/checkLogin')
+            .then((res)=>{
+                console.log(res.data.isLogined);
+                if (!res.data.isLogined){
+                    replaceState({ pathname: '/login' });
+                    cd();
+                }
+                else{
+                    cd();
+                }
+            })
     };
-    sleep = (delay)=> {
-        var start = (new Date()).getTime();
-        while ((new Date()).getTime() - start < delay) {
-
-        }
+    handleLoginOut=()=>{
+        axios.get('/admin/LoginOut')
+            .then((res)=>{
+                if (res.status === 200){
+                    alert("注销成功");
+                    window.location.hash = "#/";
+                }
+                else {
+                    console.log("error")
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     };
-
-    @action
-    loginOut= ()=>{
-        this.logined = false;
-    }
 }
 export default new StoreLogin();
 

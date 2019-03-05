@@ -8,7 +8,6 @@ import {observer,inject} from 'mobx-react';
 class Home extends Component{
     render(){
         const {StorePub} = this.props;
-        const {StoreLogin} = this.props;
         return (
             <Fragment>
                 <div className={"title"}>
@@ -22,7 +21,7 @@ class Home extends Component{
                         name=""
                         type="button"
                         className="btn btn-success edit_id"
-                        onClick={()=>{StorePub.handleLoginOut();StoreLogin.loginOut()}}
+                        onClick={()=>StorePub.handleLoginOut()}
                     >
                         注销
                     </button>
