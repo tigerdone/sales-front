@@ -4,7 +4,6 @@ import Home from './Home'
 import { Router , Route, hashHistory } from 'react-router';
 import {inject, observer} from "mobx-react";
 
-
 @inject('StoreLogin')
 @observer
 class index extends Component{

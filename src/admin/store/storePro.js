@@ -29,8 +29,12 @@ class StorePro{
             console.log(e.file.name)
         }
     }
+    @action handleInputBoxInput(key,value){
+        this.input[key] = value;
+        // console.log(this.input[key])
+    }
     @action insertOne=()=>{
-        console.log(this.input);
+        // console.log(this.input);
         axios.post("admin/proInsert",this.input).then((res)=>{
             if(res.status === 200){
                 alert("提交成功！")
@@ -42,10 +46,6 @@ class StorePro{
             console.log(err);
         })
     };
-    @action handleInputBoxInput(key,value){
-        this.input[key] = value;
-        // console.log(this.input[key])
-    }
 }
 
 export default new StorePro();

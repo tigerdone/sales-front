@@ -17,7 +17,6 @@ class StoreLogin {
             .then((res)=>{
                 if (res.status === 200){
                     window.location.hash = "#/home";
-                    this.logined = true;
                 }
                 else {
                     console.log("error")
