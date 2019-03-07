@@ -10,5 +10,4 @@ class Mytest extends Component{
         )
     }
 }
-
 export default Mytest

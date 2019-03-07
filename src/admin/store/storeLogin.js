@@ -21,7 +21,6 @@ class StoreLogin {
     handleLogin=()=>{
         console.log(this.loginInputBox.inputName, '提交数据');
         this.isLoading = true;
-
         axios.post('/admin/login',this.loginInputBox)
             .then((res)=>{
                 if (res.data.isLogined === true){
