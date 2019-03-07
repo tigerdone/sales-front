@@ -10,22 +10,23 @@ class Index extends Component{
             <tr className="active">
                 <td>
                     <p className="body_item">
-                        {items.item}
+                        {/*{items.items}*/}
+                        <img src={"admin/proImg/" + items.picture[0]} className={"proImageBox"}  alt="找不到img"/>
                     </p>
                 </td>
                 <td>
                     <p className="body_item">
-                        {items.paper}
+                        {items.ProgramLeader}
                     </p>
                 </td>
                 <td>
                     <p className="body_item">
-                        {items.video}
+                        {items.PDFLink}
                     </p>
                 </td>
                 <td>
                     <p className="body_item">
-                        {items.video}
+                        {items.PosterLink}
                     </p>
                 </td>
                 <td className={"repaireBtn"}>
@@ -35,7 +36,7 @@ class Index extends Component{
                         className="btn btn-success edit_id"
                         data-toggle="modal"
                         data-target="#myModal"
-                        onClick={()=>StorePro.setInput(items)}
+                        // onClick={()=>StorePro.setInput(items)}
                     >
                         修改
                     </button>
@@ -46,7 +47,7 @@ class Index extends Component{
                         type="button"
                         className="btn btn-success delete_id"
                         data-toggle="modal"
-                        data-target="#myModalDelete"
+                        data-target="#myModalProDelete"
                         onClick={()=>StorePro.setInput(items)}
                     >
                         删除
@@ -56,6 +57,5 @@ class Index extends Component{
         )
     }
 }
-
 export default Index
 

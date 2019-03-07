@@ -1,9 +1,16 @@
 //const rewireMobX = require('react-app-rewire-mobx');
 const {
     override,
-    addDecoratorsLegacy
+    addDecoratorsLegacy,
+    fixBabelImports
 } = require("customize-cra");
 
 module.exports = override(
-    addDecoratorsLegacy()
+    addDecoratorsLegacy(),
+    fixBabelImports('import', {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: 'css',
+    })
 );
+

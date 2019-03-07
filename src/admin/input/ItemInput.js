@@ -14,10 +14,9 @@ class Index extends Component{
                 <div className="input_message">
                     <input
                         type="text"
-                        // required="required"
                         placeholder={item}
                         name={item}
-                        value={StorePro.input[item]}
+                        value={StorePro.InputBox[item]}
                         onChange={(e)=>StorePro.handleInputBoxInput(e.target.name,e.target.value)}
                     />
                 </div>

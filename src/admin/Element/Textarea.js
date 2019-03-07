@@ -7,7 +7,7 @@ import Textarea from "../input/InputPro";
 @observer
 class Input extends Component{
     render(){
-        const {StorePro} = this.props;
+        const {StorePro,item} = this.props;
         return (
 
             <div className={"message_name"}>
@@ -20,8 +20,8 @@ class Input extends Component{
                         required="required"
                         placeholder="item"
                         // value={StorePub.InputBox.item}
-                        name="name"
-                        onChange={(e)=>StorePro.handleInputBoxInput("type",e.target.value)}
+                        name={item}
+                        onChange={(e)=>StorePro.handleInputBoxInput(e.target.name,e.target.value)}
                     />
                 </div>
             </div>

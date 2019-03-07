@@ -1,5 +1,7 @@
-import React,{Component} from 'react'
-import {inject, observer} from "mobx-react/index";
+import React,{ Component } from 'react';
+import { inject, observer } from "mobx-react/index";
+import { Spin } from 'antd';
+// import Card from './Element/Loading';
 
 @inject('StoreLogin')
 @observer
@@ -12,6 +14,7 @@ class Login extends Component{
                     <p className="firm_title">
                         管理员后台管理系统
                     </p>
+
                     <div className="login_box">
                         <p className="item">
                             登录
@@ -78,6 +81,10 @@ class Login extends Component{
                                     </label>
                                 </div>
                             </div>
+                            <p className={"message"}>
+                                {StoreLogin.message}
+                            </p>
+
                             <div className="btn_item">
                                 <button
                                     id="my_submit"
@@ -85,7 +92,18 @@ class Login extends Component{
                                     className="button login_in"
                                     onClick={()=>{StoreLogin.handleLogin()}}
                                 >
-                                    登录
+                                    { StoreLogin.isLoading?
+                                        (
+                                            <div className="example">
+                                                <Spin/>
+                                            </div>
+                                        ):
+                                        (
+                                            <span>
+                                                登录
+                                            </span>
+                                        )
+                                    }
                                 </button>
                                 <button
                                     type="button"
@@ -104,6 +122,4 @@ class Login extends Component{
 }
 
 export default Login
-
-
 

@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import Item from './ItemPro'
 import {observer,inject} from 'mobx-react'
 import InputPro from '../input/InputPro'
-
+import ProDeleteConfirm from "../input/proDeleConfirm";
 
 @inject('StorePro')
 @observer
@@ -63,20 +63,21 @@ class Index extends Component{
                                 </tr>
                                 </thead>
                                 <tbody className="my_tbody my_tbody_pro">
-                                {/*{*/}
-                                    {/*StorePub.datas.map(*/}
-                                        {/*(todo) => <Item*/}
-                                            {/*key = {Math.random()}*/}
-                                            {/*items = {todo}*/}
-                                        {/*/>*/}
-                                    {/*)*/}
-                                {/*}*/}
+                                {
+                                    StorePro.datas.map(
+                                        (todo) => <Item
+                                            key = {Math.random()}
+                                            items = {todo}
+                                        />
+                                    )
+                                }
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <InputPro/>
+                <ProDeleteConfirm/>
             </div>
         )
     }

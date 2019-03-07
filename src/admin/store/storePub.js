@@ -34,6 +34,7 @@ class StorePub {
         this.Paper.push(item)
     }
 
+    @action
     getPaper=(e)=>{
         this.Paper = [];
         let router = '/admin/Data?name=' + e.toLocaleLowerCase();
@@ -48,15 +49,14 @@ class StorePub {
                     console.log("error")
                 }
             })
-            .catch(function (error) {
+            .catch( (error)=>{
                 console.log(error);
             });
     };
+    @action
     setInput=(value)=>{
         this.InputBox = methods.deepClone(value);
-
         this.show = true;
-
     };
     clearInput=()=>{
         this.InputBox._id= "";

@@ -1,13 +1,19 @@
 import {observe, action, computed, observable} from "mobx";
 import axios from "axios";
+import methods from "../function/method";
+
 
 class StorePro{
+    constructor(){
+        this.getProdata();
+    }
     // 数据列表存储
     @observable datas = [];
     // 输入框内容存储
-    @observable input = {
+    @observable InputBox = {
+        _id:"",
         picture : [],
-        items : "",
+        item : "",
 
         Advisor: "",
         ProgramLeader: "",
@@ -23,19 +29,22 @@ class StorePro{
         listType: 'picture-card',
         defaultFileList: []
     };
+    @action setInput = (item) =>{
+        this.InputBox = methods.deepClone(item);
+    };
     @action addPicture(e){
         if (e.file.response === "OK") {
-            this.input.picture.push(e.file.name);
+            this.InputBox.picture.push(e.file.name);
             console.log(e.file.name)
         }
     }
     @action handleInputBoxInput(key,value){
-        this.input[key] = value;
-        // console.log(this.input[key])
+        this.InputBox[key] = value;
+        // console.log(this.InputBox[key])
     }
     @action insertOne=()=>{
         // console.log(this.input);
-        axios.post("admin/proInsert",this.input).then((res)=>{
+        axios.post("admin/proInsert",this.InputBox).then((res)=>{
             if(res.status === 200){
                 alert("提交成功！")
             }
@@ -46,6 +55,27 @@ class StorePro{
             console.log(err);
         })
     };
+    @action getProdata=()=>{
+            axios.get('admin/getProdata')
+                .then((res)=>{
+                if (res.status === 200){
+                    res.data.map((item)=>{
+                        this.datas.push(item);
+                    })
+                }
+                else{
+                    console.log("error");
+                }
+            })
+    };
+    handleDelete= ()=>{
+      axios.post('admin/proDeleOne',this.InputBox)
+          .then((res)=>{
+              if (res.status === 200){
+                  alert("删除成功！！")
+              }
+          })
+    }
 }
 
 export default new StorePro();

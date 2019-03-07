@@ -7,6 +7,7 @@
     "@babel/plugin-proposal-decorators": "^7.3.0",
     "antd": "^3.13.6",
     "axios": "^0.18.0",
+    "babel-plugin-import": "^1.11.0",
     "hermes-react": "^1.8.1",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
