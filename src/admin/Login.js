@@ -14,7 +14,6 @@ class Login extends Component{
                     <p className="firm_title">
                         管理员后台管理系统
                     </p>
-
                     <div className="login_box">
                         <p className="item">
                             登录
