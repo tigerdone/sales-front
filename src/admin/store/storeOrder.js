@@ -9,6 +9,7 @@ import methods from '../function/method'
 class StoreOrder {
     constructor() {
         this.getPaper("Paper");
+        this.getPrice();
     }
     @observable Paper = [];
     @observable InputBox = {
@@ -22,6 +23,7 @@ class StoreOrder {
         isReback: "sss",
         ifFinish: "ed"
     };
+
     @observable price = {
         _id:"",
         "adultPrice": "80",
@@ -57,6 +59,23 @@ class StoreOrder {
                 if (res.status === 200){
                     res.data.map((item)=>{
                         this.addPaper(item)
+                    })
+                }
+                else {
+                    console.log("error")
+                }
+            })
+            .catch( (error)=>{
+                console.log(error);
+            });
+    };
+    @action
+    getPrice=()=>{
+        axios.get( '/admin/price')
+            .then((res)=>{
+                if (res.status === 200){
+                    res.data.map((item)=>{
+                        this.price = item
                     })
                 }
                 else {
