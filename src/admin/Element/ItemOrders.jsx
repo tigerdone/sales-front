@@ -1,26 +1,41 @@
 import React,{Component} from 'react'
 import {observer,inject} from 'mobx-react'
 
-@inject('StorePub')
+@inject('StoreOrder')
 @observer
 class Index extends Component{
     render(){
-        const {items,StorePub} = this.props;
+        const {items,StoreOrder} = this.props;
         return (
                 <tr className="active">
                     <td>
                         <p className="body_item">
-                            {items.item}
+                            {items.orderNum}
                         </p>
                     </td>
                     <td>
                         <p className="body_item">
-                            {items.paper}
+                            {items.platform}
                         </p>
                     </td>
                     <td>
                         <p className="body_item">
-                            {items.video}
+                            {parseInt(items.adultNum)+parseInt(items.childNum)}
+                        </p>
+                    </td>
+                    <td>
+                        <p className="body_item">
+                            {parseInt(items.adultNum)+parseInt(items.childNum)}
+                        </p>
+                    </td>
+                    <td>
+                        <p className="body_item">
+                            {items.payWay}
+                        </p>
+                    </td>
+                    <td>
+                        <p className="body_item">
+                            {items.isReback}
                         </p>
                     </td>
                     <td className={"repaireBtn"}>
@@ -30,7 +45,7 @@ class Index extends Component{
                             className="btn btn-success edit_id"
                             data-toggle="modal"
                             data-target="#myModal"
-                            onClick={()=>StorePub.setInput(items)}
+                            onClick={()=>StoreOrder.setInput(items)}
                         >
                             修改
                         </button>
@@ -42,7 +57,7 @@ class Index extends Component{
                             className="btn btn-success delete_id"
                             data-toggle="modal"
                             data-target="#myModalDelete"
-                            onClick={()=>StorePub.setInput(items)}
+                            onClick={()=>StoreOrder.setInput(items)}
                         >
                             删除
                         </button>

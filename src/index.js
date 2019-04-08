@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Router from './admin/Router';
 import {Provider} from 'mobx-react';
-import StorePub from './admin/store/storePub'
+import StoreOrder from './admin/store/storeOrder'
 import StorePro from './admin/store/storePro'
 import StoreLogin from './admin/store/storeLogin'
 
 ReactDOM.render(
     <Provider
-        StorePub = {StorePub}
+        StoreOrder = {StoreOrder}
         StorePro = {StorePro}
         StoreLogin = {StoreLogin}
     >

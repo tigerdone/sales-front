@@ -19,7 +19,7 @@ class Input extends Component{
                         className="username"
                         required="required"
                         placeholder="item"
-                        // value={StorePub.InputBox.item}
+                        // value={StoreOrder.InputBox.item}
                         name={item}
                         onChange={(e)=>StorePro.handleInputBoxInput(e.target.name,e.target.value)}
                     />

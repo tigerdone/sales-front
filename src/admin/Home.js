@@ -1,33 +1,34 @@
 import React,{Component,Fragment} from 'react'
 import Project from "./Element/Project";
-import Publications from "./Element/Publications";
+import Orders from "./Element/Orders";
 import {observer,inject} from 'mobx-react';
 
-@inject('StorePub')
+@inject('StoreOrder')
 @observer
 class Home extends Component{
     render(){
-        const {StorePub} = this.props;
+        const {StoreOrder} = this.props;
         return (
             <Fragment>
                 <div className={"title"}>
                     <span>
-                        ims 后台管理系统
-                    </span>
-                    <span className={"hello"}>
-                        ims 欢迎你
+                        漂流后台管理系统
                     </span>
                     <button
                         name=""
                         type="button"
-                        className="btn btn-success edit_id"
-                        onClick={()=>StorePub.handleLoginOut()}
+                        className="btn btn-success edit_id hello"
+                        onClick={()=>StoreOrder.handleLoginOut()}
                     >
                         注销
                     </button>
+                    <span className={"hello"}>
+                        欢迎你
+                    </span>
+
                 </div>
 
-                <Publications/>
+                <Orders/>
                 <Project/>
             </Fragment>
         )

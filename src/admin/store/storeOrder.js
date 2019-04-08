@@ -6,24 +6,38 @@ import {
 import axios from 'axios'//发送ajax 请求
 import methods from '../function/method'
 
-class StorePub {
+class StoreOrder {
     constructor() {
         this.getPaper("Paper");
     }
     @observable Paper = [];
     @observable InputBox = {
         _id:"",
-        type:"",
-        item:"",
-        video:"",
-        paper:"",
+        orderNum: "",
+        platform: "sss",
+        adultNum: "sss",
+        childNum: "sss",
+        totalMoney: "ss",
+        payWay: "sss",
+        isReback: "sss",
+        ifFinish: "ed"
     };
+    @observable price = {
+        _id:"",
+        "adultPrice": "80",
+        "childPrice": "40",
+        "plupPrice": "50",
+        "clothPrice": "30"
+    };
+
+    @observable activeClass = "will";
 
     @observable show = true;
 
     @computed get PaperLength(){
         return this.Paper.length;
     }
+
     @action
     handleInputBoxInput(key,value){
         this.InputBox[key]=value;
@@ -58,15 +72,11 @@ class StorePub {
         this.InputBox = methods.deepClone(value);
         this.show = true;
     };
+    @action
     clearInput=()=>{
-        this.InputBox._id= "";
-        this.InputBox.type= "paper";
-        this.InputBox.item= "";
-        this.InputBox.video= "";
-        this.InputBox.paper= "";
-        // Object.keys(this.InputBox).forEach(function(ss){
-        //     this.InputBox[ss] = "";
-        // })
+        for(var i in this.InputBox) {
+                this.InputBox[i] = "";
+        }
     };
     inputUpdate = () =>{
         let router;
@@ -138,7 +148,8 @@ class StorePub {
         }
         this.getPaper(e)
     };
-    @observable activeClass = "paper";
+
+
     getClassName=(e)=>{
         if(this.activeClass === e){
             return " linkActive"
@@ -150,6 +161,5 @@ class StorePub {
     setClassName=(e)=>{
         this.activeClass = e
     }
-
 }
-export default new StorePub();
+export default new StoreOrder();

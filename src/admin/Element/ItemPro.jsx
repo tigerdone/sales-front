@@ -11,7 +11,7 @@ class Index extends Component{
                 <td>
                     <p className="body_item">
                         {/*{items.items}*/}
-                        <img src={"admin/proImg/" + items.picture[0]} className={"proImageBox"}  alt="找不到img"/>
+                        <img src={"admin/image/" + items.picture[0]} className={"proImageBox"}  alt="找不到img"/>
                     </p>
                 </td>
                 <td>

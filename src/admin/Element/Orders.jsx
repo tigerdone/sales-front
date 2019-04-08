@@ -1,40 +1,36 @@
 import React,{Component} from 'react'
-import Item from './ItemPub'
+import ItemOrders from './ItemOrders'
 import {observer,inject} from 'mobx-react'
-import InputPub from "../input/InputPub";
+import InputNewOrder from "../input/InputNewOrder";
 import DeleteConfirm from "../input/DeleteConfirm";
 
-@inject('StorePub')
+@inject('StoreOrder')
 @observer
 class Index extends Component{
     render(){
-        const {StorePub} = this.props;
+        const {StoreOrder} = this.props;
         return (
             <div className="container">
                 <h1>
-                    publications
+                    订单状态
                 </h1>
                 <ul className="nav nav-tabs" id="myTab">
-                    <li className={"link" + StorePub.getClassName("paper")}>
-                        <button onClick={()=>{StorePub.getPaper("paper");StorePub.setClassName("paper")}}>
-                            Papers
+                    <li className={"link" + StoreOrder.getClassName("will")}>
+                        <button onClick={()=>{StoreOrder.getPaper("will");StoreOrder.setClassName("will")}}>
+                            待完成订单
                         </button>
                     </li>
-                    <li className={"link" + StorePub.getClassName("patent")}>
-                        <button onClick={()=>{StorePub.getPaper("patent");StorePub.setClassName("patent")}}>
-                            Patent
+                    <li className={"link" + StoreOrder.getClassName("ed")}>
+                        <button onClick={()=>{StoreOrder.getPaper("ed");StoreOrder.setClassName("ed")}}>
+                            已完成订单
                         </button>
                     </li>
-                    <li className={"link" + StorePub.getClassName("software_copyright")}>
-                        <button onClick={()=>{StorePub.getPaper("software_copyright");StorePub.setClassName("software_copyright")}}>
-                            Software_copyright
+                    <li className={"link" + StoreOrder.getClassName("all")}>
+                        <button onClick={()=>{StoreOrder.getPaper("all");StoreOrder.setClassName("all")}}>
+                            所有订单
                         </button>
                     </li>
-                    <li className={"link" + StorePub.getClassName("awards")}>
-                        <button onClick={()=>{StorePub.getPaper("awards");StorePub.setClassName("awards")}}>
-                            Awards
-                        </button>
-                    </li>
+
                     <li className={"addBtn"}>
                         <button
                             name=""
@@ -42,14 +38,12 @@ class Index extends Component{
                             className="btn btn-success edit_id"
                             data-toggle="modal"
                             data-target="#myModal"
-                            onClick={()=>StorePub.clearInput()}
+                            onClick={()=>StoreOrder.clearInput()}
                         >
-                            添加
+                            新建定单
                         </button>
-
                     </li>
                 </ul>
-
                 <div className="tab-content">
                     <div
                         className="tab-pane active"
@@ -61,30 +55,41 @@ class Index extends Component{
                                 <tr>
                                     <th className="td">
                                         <p className="t_header">
-                                            item
+                                            订单号
                                         </p>
                                     </th>
                                     <th className="td">
                                         <p className="t_header">
-                                            paper link
+                                            平台
                                         </p>
                                     </th>
                                     <th className="td">
                                         <p className="t_header">
-                                            video link
+                                            人数
                                         </p>
                                     </th>
-                                    <th colSpan={2}>
+                                    <th className="td">
                                         <p className="t_header">
-                                            操作
+                                            总价
                                         </p>
                                     </th>
+                                    <th className="td">
+                                        <p className="t_header">
+                                            付款押金方式
+                                        </p>
+                                    </th>
+                                    <th className="td">
+                                        <p className="t_header">
+                                            是否退押金
+                                        </p>
+                                    </th>
+
                                 </tr>
                                 </thead>
                                 <tbody className="my_tbody my_tbody_pub">
                                 {
-                                    StorePub.Paper.map(
-                                        (todo) => <Item
+                                    StoreOrder.Paper.map(
+                                        (todo) => <ItemOrders
                                             key = {Math.random()}
                                             items = {todo}
                                         />
@@ -95,7 +100,7 @@ class Index extends Component{
                         </div>
                     </div>
                 </div>
-                <InputPub/>
+                <InputNewOrder/>
                 <DeleteConfirm/>
             </div>
         )
