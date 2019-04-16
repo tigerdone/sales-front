@@ -25,7 +25,7 @@ class StoreLogin {
             .then((res)=>{
                 if (res.data.isLogined === true){
                     this.isLoading = false;
-                    window.location.hash = "#/home";
+                    window.location.hash = "#/order";
                 }
                 else if (res.data.isLogined === false){
                     console.log("error");

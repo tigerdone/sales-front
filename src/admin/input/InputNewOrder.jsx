@@ -44,7 +44,8 @@ class InputNewOrder extends Component{
                                             personType = {"成人"}
                                         />
                                         <span>
-                                            80元/人
+                                            {StoreOrder.price.adultPrice}
+                                            元/人
                                         </span>
                                     </div>
                                     <div>
@@ -52,17 +53,20 @@ class InputNewOrder extends Component{
                                             personType = {"儿童"}
                                         />
                                         <span>
-                                            40元/人
+                                            {StoreOrder.price.childPrice}
+                                            元/人
                                         </span>
                                     </div>
                                     <div>
                                         <p>
-                                            安全服
+                                            安全服：{StoreOrder.price.clothPrice}
+                                            元/人
                                         </p>
                                     </div>
                                     <div>
                                         <p>
-                                            浆板
+                                            浆板：{StoreOrder.price.plupPrice}
+                                            元/人
                                         </p>
                                     </div>
                                     <div>

@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import Login from './Login'
-import Home from './Home'
+import Order from './Order'
 import { Router , Route, hashHistory } from 'react-router';
 import {inject, observer} from "mobx-react";
 
@@ -13,7 +13,7 @@ class index extends Component{
             <Router history={hashHistory}>
                 <Route path='/' component={Login}/>
                 <Route path='/login' component={Login}/>
-                <Route path='/home' component={Home} onEnter={StoreLogin.isAdmin}/>
+                <Route path='/order' component={Order} onEnter={StoreLogin.isAdmin}/>
             </Router>
         )
     }

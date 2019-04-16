@@ -5,7 +5,7 @@ import {observer,inject} from 'mobx-react';
 
 @inject('StoreOrder')
 @observer
-class Home extends Component{
+class Order extends Component{
     render(){
         const {StoreOrder} = this.props;
         return (
@@ -25,15 +25,13 @@ class Home extends Component{
                     <span className={"hello"}>
                         欢迎你
                     </span>
-
                 </div>
-
                 <Orders/>
                 <Project/>
             </Fragment>
         )
     }
 }
-export default Home
+export default Order
 
 
