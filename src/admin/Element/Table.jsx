@@ -6,6 +6,7 @@ import {inject, observer} from "mobx-react";
 import SelectTime from  "./SelectTime"
 import SelectPlat from  "./SelectPlat"
 import Modal1 from  "./Modal1"
+import DeleModal from "./DeleModal"
 const TabPane = Tabs.TabPane;
 const Search = Input.Search;
 
@@ -43,9 +44,9 @@ const columns = [{
     key: 'saler',
 },{
     title: '操作',
-    key: 'action',
-    render: () => (
-            <OrderLine />
+    key: '_id',
+    render: (index,record,text) => (
+            <OrderLine record = {record} text = {text} index = {index} />
     ),
 }];
 
@@ -57,46 +58,26 @@ class MyTable extends Component{
         const {StoreOrder} = this.props;
         return (
             <div>
-                <div className={"fiters"}>
-                    <span>
-                        选择时间：
-                    </span>
-                    <SelectTime />
-
-                    <span className={"empty"}>
-                        选择平台：
-                    </span>
-                    <SelectPlat />
-                </div>
                 <br/>
                 <div className={"seach_box"}>
+                    <div className={"fiters"}>
+                        <span>
+                            选择时间：
+                        </span>
+                        <SelectTime />
+                        <span className={"empty"}>
+                            选择平台：
+                        </span>
+                        <SelectPlat />
+                    </div>
                     <div className={"seach_container"}>
                         <Search
-                            placeholder="input search text"
-                            onSearch={value => console.log(value)}
+                            placeholder="请输入编号查询"
+                            onSearch={value => StoreOrder.setInputSearch(value)}
                             enterButton
                         />
                     </div>
-                    <div className={"seach_container"}>
-                        <Button
-                            type="primary"
-                            onClick={StoreOrder.initInput}
-                        >
-                            默认
-                        </Button>
-                    </div>
-                    <Button
-                        type="primary"
-                        onClick={() => StoreOrder.setModal1Visible(true)}
-                    >
-                        新建
-                    </Button>
-                    <Modal1 />
-
                 </div>
-
-                <br/>
-
                 <Tabs onChange={StoreOrder.setFilishFilter} type="card">
                     <TabPane tab="所有" key="all">
                     </TabPane>
@@ -105,7 +86,28 @@ class MyTable extends Component{
                     <TabPane tab="已完成" key="ed">
                     </TabPane>
                 </Tabs>
-                <Table columns={columns} dataSource={StoreOrder.fiter()} />
+                <Table
+                    columns={columns}
+                    dataSource={StoreOrder.fiter()}
+                />
+                <div className={"newOrder"}>
+                    <Button
+                        type="primary"
+                        onClick={StoreOrder.setInitFilter}
+                    >
+                        默认
+                    </Button>
+                    <span className={"empty"}>
+                        </span>
+                    <Button
+                        type="primary"
+                        onClick={() => StoreOrder.setmodalInputBox(true)}
+                    >
+                        新建
+                    </Button>
+                    <Modal1 />
+                    <DeleModal />
+                </div>
             </div>
         )
     }

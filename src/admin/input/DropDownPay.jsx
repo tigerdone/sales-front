@@ -7,10 +7,12 @@ class DropDown extends Component{
     render(){
         const {StoreOrder,payType} = this.props;
         return (
-            <label>
-                {
-                    payType === "payWay"?("选择付款方式："):("押金付款方式：")
-                }
+            <label className={"OrderItem"}>
+                <span >
+                     {
+                         payType === "payWay"?("选择付款方式："):("押金付款方式：")
+                     }
+                </span>
                 <select
                     value = {
                         payType === "payWay"?(StoreOrder.InputBox.payWay):(StoreOrder.InputBox.deposite)

@@ -16,6 +16,7 @@ class SelectTime extends Component {
                 onChange = {StoreOrder.setTimefilter}
                 // defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
                 format={dateFormat}
+                value={StoreOrder.filterTime}
             />
         )
     }

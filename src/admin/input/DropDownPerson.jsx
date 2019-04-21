@@ -17,22 +17,34 @@ class DropDown extends Component{
             person = "childNum";
         }
         return (
-            <label>
-                {personType}人数：
-                <select
-                    value=
-                        {
-                            (personType === "成人")?
-                                (StoreOrder.InputBox.adultNum):(StoreOrder.InputBox.childNum)
-                        }
+            <label className={"OrderItem"}>
+                <span>
+                    {personType}人数：
+                </span>
+                <div>
+                    <select
+                        value=
+                            {
+                                (personType === "成人")?
+                                    (StoreOrder.InputBox.adultNum):(StoreOrder.InputBox.childNum)
+                            }
                         onChange={(e)=>StoreOrder.handleInputBoxInput(person,e.target.value)}
                     >
-                    {
-                        arr.map(
-                            (i,ii) => <option key={new Date() + Math.random()} value={ii}>{ii}</option>
-                        )
-                    }
-                </select>
+                        {
+                            arr.map(
+                                (i,ii) => <option key={new Date() + Math.random()} value={ii}>{ii}</option>
+                            )
+                        }
+                    </select>
+                    <span>
+                        {
+                            (personType === "成人")?
+                                (StoreOrder.price.adultPrice):(StoreOrder.price.adultPrice)
+                        }
+                        元/人
+                    </span>
+                </div>
+
             </label>
         )
     }

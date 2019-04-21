@@ -5,7 +5,6 @@ import {
     configure,
 } from 'mobx'
 import axios from 'axios'//发送ajax 请求
-import methods from '../function/method'
 configure({ enforceActions: "observed" });
 const moment = require('moment');
 
@@ -31,7 +30,6 @@ class StoreOrder {
         ifFinish: "",
         saler:""
     };
-
     @observable price = {
         _id:"",
         adultPrice: 80,
@@ -39,25 +37,23 @@ class StoreOrder {
         plupPrice: 50,
         clothPrice: 30
     };
-
     @observable activeClass = "ing";
-
     @observable show = true;
-
     @observable saler = "";
+    @observable modalInputBox = false;
+    @observable deleModal = false;
 
+    //filter
     @observable filterStr = "all";
     @observable filterTime = [];
     @observable filterplat = "各平台";
-    @observable modal1Visible = false;
-
+    @observable inputSearch = "";
 
     @computed get ordersLength(){
         return this.orders.length;
-    }
-
+    };
     @action
-    handleInputBoxInput(key,value){
+    handleInputBoxInput=(key,value)=>{
         this.InputBox[key]=value;
         this.InputBox.totalMoney =
         Number(this.InputBox.adultNum)*Number(this.price.adultPrice)
@@ -65,17 +61,16 @@ class StoreOrder {
         + (Number(this.InputBox.adultNum)+Number(this.InputBox.childNum))*Number(this.price.clothPrice)
         + Number(this.InputBox.adultNum)*Number(this.price.plupPrice)
     };
-
     @action
     addOneOrders=(item)=>{
         this.orders.push(item)
     };
-
     @action
     setOrders=(data)=>{
         this.orders = [];
         data.map((item)=>{
             item.key = new Date() + Math.random();
+            item.personNum = parseInt(item.childNum) + parseInt(item.adultNum);
             this.addOneOrders(item);
             return item.id
         })
@@ -103,7 +98,7 @@ class StoreOrder {
             .then((res)=>{
                 if (res.status === 200){
                     res.data.map((item)=>{
-                        this.price = item;
+                        this.setPrice(item);
                         return item.id
                     })
                 }
@@ -115,12 +110,23 @@ class StoreOrder {
                 console.log(error);
             });
     };
-
+    @action
+    setmodalInputBox=(values)=>{
+        this.initInput();
+        this.modalInputBox = values;
+    };
+    @action
+    setDeleModal=(values)=>{
+        this.deleModal = values;
+    };
+    @action
+    setPrice=(item)=>{
+        this.price = item;
+    };
     @action
     setSaler=(value)=>{
         this.saler=value;
     };
-
     @action
     getSaler=()=>{
         axios.get( '/admin/getSaler')
@@ -136,37 +142,52 @@ class StoreOrder {
                 console.log(error);
             });
     };
-
-    @action
-    setInput=(value)=>{
-        this.InputBox = methods.deepClone(value);
-        this.show = true;
-    };
-
     @action
     initInput=()=>{
-        for(var i in this.InputBox) {
+        for(let i in this.InputBox) {
                 this.InputBox[i] = 0;
         }
         this.InputBox._id = "";
         this.InputBox.isReback = "no";
         this.InputBox.ifFinish = "ing";
         this.InputBox.saler = this.saler;
+        this.InputBox.platform = "现场";
+        this.InputBox.payWay = "现金";
+        this.InputBox.deposite = "现金";
+
+    };
+    @action
+    updateInput=(record,tag)=>{
+        this.InputBox = record;
+        if (tag === "repaire") {
+            this.modalInputBox = true;
+        }
+        else if(tag === "delete"){
+            this.deleModal = true;
+        }
     };
 
-    inputUpdate = () =>{
+    @action
+    setIfFinish=(value)=>{
+        this.InputBox.ifFinish = value
+    };
+
+
+    //数据交互
+    inputUpdate=() =>{
         let router;
         if (this.InputBox._id === ""){
-            console.log(this.InputBox);
+            // console.log(this.InputBox);
             router = '/admin/insertoneOrder';
         }
         else{
             console.log("this.InputBox");
-            router = '/admin/updateoneOrder'
+            router = '/admin/updateoneOrder';
         }
         axios.post(router,this.InputBox)
             .then((res)=>{
                 if (res.status === 200){
+                    this.setmodalInputBox(false);
                     alert("提交成功")
                 }
                 else {
@@ -180,6 +201,7 @@ class StoreOrder {
         this.reLode()
     };
     handleDelete=()=>{
+        this.setDeleModal(false);
         axios.post('/admin/deleteOne',this.InputBox)
             .then((res)=>{
                 if (res.status === 200){
@@ -229,7 +251,6 @@ class StoreOrder {
             if (this.filterStr !== "all" && item.ifFinish !== this.filterStr){
                 getIn = false;
             }
-
             if (this.filterTime.length !== 0
                 &&!moment(this.filterTime[0]).isSame(item.time, 'day')
                 &&!moment(this.filterTime[1]).isSame(item.time, 'day')
@@ -237,8 +258,10 @@ class StoreOrder {
             {
                 getIn = false;
             }
-
             if ( this.filterplat !== "各平台" && item.platform !== this.filterplat) {
+                getIn = false;
+            }
+            if (this.inputSearch !== "" && item.orderNum !== this.inputSearch){
                 getIn = false;
             }
 
@@ -250,6 +273,7 @@ class StoreOrder {
         return newOrder
     };
 
+    // fiter方法
     @action
     setFilishFilter=(key)=>{
         this.filterStr = key;
@@ -263,8 +287,15 @@ class StoreOrder {
         this.filterplat = values;
     };
     @action
-    setModal1Visible=(values)=>{
-        this.modal1Visible = values;
-    }
+    setInputSearch=(values)=>{
+        this.inputSearch = values;
+    };
+    @action
+    setInitFilter=()=>{
+        this.filterStr = "all";
+        this.filterTime = [];
+        this.filterplat = "各平台";
+        this.inputSearch = "";
+    };
 }
 export default new StoreOrder();

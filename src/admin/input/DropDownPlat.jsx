@@ -7,8 +7,10 @@ class DropDownPlat extends Component{
     render(){
         const {StoreOrder} = this.props;
         return (
-            <label>
-                选择购票平台：
+            <label className={"OrderItem"}>
+                <span>
+                    选择购票平台：
+                </span>
                 <select
                     value={StoreOrder.InputBox.platform}
                     onChange={(e)=>StoreOrder.handleInputBoxInput("platform",e.target.value)}

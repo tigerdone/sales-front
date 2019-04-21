@@ -57,7 +57,6 @@ class InputNewOrder extends Component{
                                     </div>
                                     <div>
                                         <p>
-
                                             安全服：
                                             { Number(StoreOrder.InputBox.adultNum) + Number(StoreOrder.InputBox.childNum) }
                                             *

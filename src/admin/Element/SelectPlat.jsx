@@ -14,7 +14,12 @@ class SelectPlat extends Component {
     render() {
         const  { StoreOrder } = this.props;
         return (
-            <Select defaultValue={StoreOrder.filterplat} style={{ width: 120 }} onChange={StoreOrder.setPlatFilter}>
+            <Select
+                defaultValue={StoreOrder.filterplat}
+                style={{ width: 120 }}
+                onChange={StoreOrder.setPlatFilter}
+                value={StoreOrder.filterplat}
+            >
                 <Option value="各平台">各平台</Option>
                 <Option value="现场">现场</Option>
                 <Option value="美团">美团</Option>
