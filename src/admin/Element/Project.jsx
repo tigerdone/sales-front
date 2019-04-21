@@ -4,6 +4,7 @@ import {observer,inject} from 'mobx-react'
 import InputPro from '../input/InputPro'
 import ProDeleteConfirm from "../input/ProDeleConfirm";
 
+export default
 @inject('StorePro')
 @observer
 class Index extends Component{
@@ -82,7 +83,5 @@ class Index extends Component{
         )
     }
 }
-
-export default Index
 
 

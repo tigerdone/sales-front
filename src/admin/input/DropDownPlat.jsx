@@ -10,13 +10,13 @@ class DropDownPlat extends Component{
             <label>
                 选择购票平台：
                 <select
-                    value={StoreOrder.InputBox.type}
+                    value={StoreOrder.InputBox.platform}
                     onChange={(e)=>StoreOrder.handleInputBoxInput("platform",e.target.value)}
                 >
-                    <option value="paper">现场</option>
-                    <option value="patent">美团</option>
-                    <option value="software_copyright">红苹果</option>
-                    <option value="awards">其他</option>
+                    <option value="现场">现场</option>
+                    <option value="美团">美团</option>
+                    <option value="红苹果">红苹果</option>
+                    <option value="其他">其他</option>
                 </select>
             </label>
         )

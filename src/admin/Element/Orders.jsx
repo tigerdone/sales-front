@@ -15,18 +15,18 @@ class Index extends Component{
                     订单状态
                 </h1>
                 <ul className="nav nav-tabs" id="myTab">
-                    <li className={"link" + StoreOrder.getClassName("will")}>
-                        <button onClick={()=>{StoreOrder.getPaper("will");StoreOrder.setClassName("will")}}>
+                    <li className={"link" + StoreOrder.getClassName("ing")}>
+                        <button onClick={()=>{StoreOrder.getoneOrder("ing")}}>
                             待完成订单
                         </button>
                     </li>
                     <li className={"link" + StoreOrder.getClassName("ed")}>
-                        <button onClick={()=>{StoreOrder.getPaper("ed");StoreOrder.setClassName("ed")}}>
+                        <button onClick={()=>{StoreOrder.getoneOrder("ed")}}>
                             已完成订单
                         </button>
                     </li>
                     <li className={"link" + StoreOrder.getClassName("all")}>
-                        <button onClick={()=>{StoreOrder.getPaper("all");StoreOrder.setClassName("all")}}>
+                        <button onClick={()=>{StoreOrder.getoneOrder("all")}}>
                             所有订单
                         </button>
                     </li>
@@ -38,7 +38,7 @@ class Index extends Component{
                             className="btn btn-success edit_id"
                             data-toggle="modal"
                             data-target="#myModal"
-                            onClick={()=>StoreOrder.clearInput()}
+                            onClick={StoreOrder.initInput}
                         >
                             新建定单
                         </button>
@@ -63,6 +63,17 @@ class Index extends Component{
                                             平台
                                         </p>
                                     </th>
+
+                                    <th className="td">
+                                        <p className="t_header">
+                                            付款方式
+                                        </p>
+                                    </th>
+                                    <th className="td">
+                                        <p className="t_header">
+                                            押金方式
+                                        </p>
+                                    </th>
                                     <th className="td">
                                         <p className="t_header">
                                             人数
@@ -75,24 +86,25 @@ class Index extends Component{
                                     </th>
                                     <th className="td">
                                         <p className="t_header">
-                                            付款押金方式
-                                        </p>
-                                    </th>
-                                    <th className="td">
-                                        <p className="t_header">
                                             是否退押金
                                         </p>
                                     </th>
-
+                                    <th className="td" colSpan={2}>
+                                        <p className="t_header">
+                                            操作
+                                        </p>
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody className="my_tbody my_tbody_pub">
                                 {
-                                    StoreOrder.Paper.map(
-                                        (todo) => <ItemOrders
-                                            key = {Math.random()}
-                                            items = {todo}
-                                        />
+                                    StoreOrder.oneOrder.map(
+                                        (todo) =>
+                                            (todo.ifFinish === StoreOrder.activeClass||StoreOrder.activeClass === "all")?(<ItemOrders
+                                                key = {Math.random()}
+                                                items = {todo}
+                                                />)
+                                            :(null)
                                     )
                                 }
                                 </tbody>

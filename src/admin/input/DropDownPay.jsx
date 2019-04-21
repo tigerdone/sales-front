@@ -5,17 +5,22 @@ import {observer,inject} from 'mobx-react'
 @observer
 class DropDown extends Component{
     render(){
-        const {StoreOrder} = this.props;
+        const {StoreOrder,payType} = this.props;
         return (
             <label>
-                选择付款方式：
+                {
+                    payType === "payWay"?("选择付款方式："):("押金付款方式：")
+                }
                 <select
-                    value={StoreOrder.InputBox.type}
-                    onChange={(e)=>StoreOrder.handleInputBoxInput("platform",e.target.value)}
+                    value = {
+                        payType === "payWay"?(StoreOrder.InputBox.payWay):(StoreOrder.InputBox.deposite)
+                        // "微信"
+                    }
+                    onChange={(e)=>StoreOrder.handleInputBoxInput(payType,e.target.value)}
                 >
-                    <option value="paper">现金</option>
-                    <option value="patent">微信</option>
-                    <option value="software_copyright">支付宝</option>
+                    <option value="现金">现金</option>
+                    <option value="微信">微信</option>
+                    <option value="支付宝">支付宝</option>
                 </select>
             </label>
         )

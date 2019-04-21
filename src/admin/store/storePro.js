@@ -1,7 +1,6 @@
-import {observe, action, computed, observable} from "mobx";
+import { action, observable } from "mobx";
 import axios from "axios";
 import methods from "../function/method";
-
 
 class StorePro{
     constructor(){
@@ -14,12 +13,10 @@ class StorePro{
         _id:"",
         picture : [],
         item : "",
-
         Advisor: "",
         ProgramLeader: "",
         ProgramMembers: "",
-
-        PaperLink:"",
+        oneOrderLink:"",
         PDFLink:"",
         PosterLink:"",
         VideoLink:"",
@@ -40,10 +37,8 @@ class StorePro{
     }
     @action handleInputBoxInput(key,value){
         this.InputBox[key] = value;
-        // console.log(this.InputBox[key])
     }
     @action insertOne=()=>{
-        // console.log(this.input);
         axios.post("admin/proInsert",this.InputBox).then((res)=>{
             if(res.status === 200){
                 alert("提交成功！")
@@ -61,6 +56,7 @@ class StorePro{
                 if (res.status === 200){
                     res.data.map((item)=>{
                         this.datas.push(item);
+                        return item.id
                     })
                 }
                 else{
@@ -68,7 +64,7 @@ class StorePro{
                 }
             })
     };
-    handleDelete= ()=>{
+    handleDelete = ()=>{
       axios.post('admin/proDeleOne',this.InputBox)
           .then((res)=>{
               if (res.status === 200){
@@ -79,11 +75,3 @@ class StorePro{
 }
 
 export default new StorePro();
-
-// {
-//     uid: -1,
-//     name: 'xxx.png',
-//     status: 'done',
-//     url: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-//     thumbUrl: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-// }

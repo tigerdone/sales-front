@@ -33,16 +33,16 @@ class Input extends Component{
                                         {StorePro.InputBox.item}
                                     </div>
                                     <div className={"message_name"}>
-                                        paper link:
+                                        oneOrder link:
                                     </div>
                                     <div className="input_message">
-                                        {StorePro.InputBox.PaperLink}
+                                        {StorePro.InputBox.oneOrderLink}
                                     </div>
                                     <div className={"message_name"}>
                                         video link:
                                     </div>
                                     <div className="input_message">
-                                        {StorePro.InputBox.PaperLink}
+                                        {StorePro.InputBox.oneOrderLink}
                                     </div>
                                     <div className="btn_item message_btn">
                                         <button

@@ -27,23 +27,26 @@ class Input extends Component{
                                     method="post"
                                 >
                                     <div className={"message_name"}>
-                                        item:
+                                        订单编号:
                                     </div>
                                     <div className="input_message">
-                                        {StoreOrder.InputBox.item}
+                                        {StoreOrder.InputBox.orderNum}
                                     </div>
+
                                     <div className={"message_name"}>
-                                        paper link:
+                                        支付方式:
                                     </div>
                                     <div className="input_message">
-                                        {StoreOrder.InputBox.paper}
+                                        {StoreOrder.InputBox.payWay}
                                     </div>
+
                                     <div className={"message_name"}>
-                                        video link:
+                                        总计:
                                     </div>
                                     <div className="input_message">
-                                        {StoreOrder.InputBox.video}
+                                        {StoreOrder.InputBox.totalMoney}
                                     </div>
+
                                     <div className="btn_item message_btn">
                                         <button
                                             id="my_submit"
@@ -51,7 +54,6 @@ class Input extends Component{
                                             className="button login_in"
                                             onClick={StoreOrder.handleDelete}
                                             data-dismiss="modal"
-
                                         >
                                             删除
                                         </button>

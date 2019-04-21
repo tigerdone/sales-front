@@ -20,17 +20,22 @@ class Index extends Component{
                     </td>
                     <td>
                         <p className="body_item">
-                            {parseInt(items.adultNum)+parseInt(items.childNum)}
-                        </p>
-                    </td>
-                    <td>
-                        <p className="body_item">
-                            {parseInt(items.adultNum)+parseInt(items.childNum)}
-                        </p>
-                    </td>
-                    <td>
-                        <p className="body_item">
                             {items.payWay}
+                        </p>
+                    </td>
+                    <td>
+                        <p className="body_item">
+                            {items.deposite}
+                        </p>
+                    </td>
+                    <td>
+                        <p className="body_item">
+                            {parseInt(items.adultNum)+parseInt(items.childNum)}
+                        </p>
+                    </td>
+                    <td>
+                        <p className="body_item">
+                            {parseInt(items.totalMoney)}
                         </p>
                     </td>
                     <td>

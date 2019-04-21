@@ -37,7 +37,7 @@ class Input extends Component{
                                     <ItemInput item={"ProgramLeader"}/>
                                     <ItemInput item={"ProgramMembers"}/>
 
-                                    <ItemInput item={"PaperLink"}/>
+                                    <ItemInput item={"oneOrderLink"}/>
                                     <ItemInput item={"PDFLink"}/>
                                     <ItemInput item={"PosterLink"}/>
                                     <ItemInput item={"VideoLink"}/>

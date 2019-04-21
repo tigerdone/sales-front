@@ -1,33 +1,38 @@
 import React,{Component,Fragment} from 'react'
-import Project from "./Element/Project";
-import Orders from "./Element/Orders";
 import {observer,inject} from 'mobx-react';
+import Table from "./Element/Table";
+import { Button } from 'antd';
 
 @inject('StoreOrder')
+@inject('StoreLogin')
 @observer
 class Order extends Component{
     render(){
         const {StoreOrder} = this.props;
         return (
             <Fragment>
-                <div className={"title"}>
+                <div className={"header"}>
                     <span>
                         漂流后台管理系统
                     </span>
-                    <button
+                    <Button
+                        type="danger"
                         name=""
-                        type="button"
                         className="btn btn-success edit_id hello"
                         onClick={()=>StoreOrder.handleLoginOut()}
+                        // htmlType={""}
                     >
                         注销
-                    </button>
+                    </Button>
                     <span className={"hello"}>
-                        欢迎你
+                    欢迎你：
+                    {StoreOrder.saler}
                     </span>
                 </div>
-                <Orders/>
-                <Project/>
+                <h4 className={"stair1Title"}>
+                    订单状态
+                </h4>
+                <Table />
             </Fragment>
         )
     }

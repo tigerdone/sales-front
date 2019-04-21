@@ -1,4 +1,4 @@
-import {observable,action,computed} from "mobx";
+import { observable,action } from "mobx";
 import axios from 'axios';
 
 class StoreLogin {
@@ -11,20 +11,34 @@ class StoreLogin {
         inputPassword: '',
         power_id: '管理员',
     };
+
     @observable message;
+    @observable saler = "sadasdasdasd";
     @observable isLoading;
+
     @action
     loginInputBoxInput=(key,value)=>{
         this.loginInputBox[key]=value;
     };
+
+    @action
+    setIsLoading=(value)=>{
+        this.isLoading=value;
+    };
+    @action
+    setSaler=(value)=>{
+        this.saler=value;
+    };
+
     @action
     handleLogin=()=>{
         console.log(this.loginInputBox.inputName, '提交数据');
-        this.isLoading = true;
+        this.setIsLoading(true);
         axios.post('/admin/login',this.loginInputBox)
             .then((res)=>{
                 if (res.data.isLogined === true){
-                    this.isLoading = false;
+                    this.setIsLoading(false);
+                    this.setSaler(this.loginInputBox.inputName);
                     window.location.hash = "#/order";
                 }
                 else if (res.data.isLogined === false){
@@ -37,6 +51,7 @@ class StoreLogin {
                 console.log(error);
             });
     };
+
     isAdmin = (nextState, replaceState,cd) =>{
         axios.get('/admin/checkLogin')
             .then((res)=>{
@@ -49,21 +64,6 @@ class StoreLogin {
                     cd();
                 }
             })
-    };
-    handleLoginOut=()=>{
-        axios.get('/admin/LoginOut')
-            .then((res)=>{
-                if (res.status === 200){
-                    alert("注销成功");
-                    window.location.hash = "#/";
-                }
-                else {
-                    console.log("error")
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
     };
 }
 export default new StoreLogin();

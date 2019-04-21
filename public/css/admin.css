@@ -1,16 +1,14 @@
 #root{
-    width: 1140px;
+    /* width: 1140px; */
     margin: 0 auto;
 }
-
 .hello{
     float: right;
+    margin: 0 20px;
 }
 .link{
     padding: 20px 20px;
-
 }
-
 .linkActive{
     background: #28a745;
     border-top-left-radius:15px;
@@ -21,7 +19,7 @@
 }
 .title{
     padding: 30px 0;
-    font-size: 20px;
+    /* font-size: 20px; */
     max-width: 1140px;
     margin: 0 auto;
 }
@@ -40,21 +38,6 @@
 .my_tbody_pub td{
     height: 80px;
     overflow: hidden;
-}
-.my_tbody_pub td:nth-child(1){
-    width: 20%;
-}
-.my_tbody_pub td:nth-child(2){
-    width: 20%;
-}
-.my_tbody_pub td:nth-child(3){
-    width: 20%;
-}
-.my_tbody_pub td:nth-child(4){
-    width: 6%;
-}
-.my_tbody_pub td:nth-child(5){
-    width: 6%;
 }
 .my_tbody_pub td{
     height: 80px;
@@ -152,13 +135,49 @@
 }
 .example {
     text-align: center;
-    /* background: rgba(0,0,0,0.05); */
     border-radius: 4px;
-    /* padding: 30px 50px; */
     margin: -9px 24px;
     position:  absolute;
-    /* width: 40px; */
+    display: block;
 }
 .message{
     color: #f00;
+    float: right;
+}
+
+/*---------------ant-design------------*/
+.login-form-forgot{
+    float: right;
+}
+.stair1Title{
+    font-size: 23px;
+    font-weight: 500;
+    background: #d3d2d2;
+    padding: 5px;
+    margin: 0 0 23px 0;
+}
+.header{
+    font-size: 20px;
+    font-weight: 500;
+    margin: 40px 0;
+}
+.fiters{
+    /* float: right; */
+    /* margin: 28px 0; */
+}
+.empty{
+    margin: 0 0 0 20px;
+}
+.seach_box{
+    /* margin: 0 20px; */
+    text-align: right;
+    justify-content: flex-end;
+    display:  flex;
+}
+
+.seach_container{
+    margin: 0 20px 0 0;
+    max-width: 200px;
+    /* text-align: right; */
+    display:  flex;
 }

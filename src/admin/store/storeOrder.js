@@ -2,64 +2,92 @@ import {
     observable,
     action,
     computed,
+    configure,
 } from 'mobx'
 import axios from 'axios'//发送ajax 请求
 import methods from '../function/method'
+configure({ enforceActions: "observed" });
+const moment = require('moment');
 
 class StoreOrder {
     constructor() {
-        this.getPaper("Paper");
+        this.getOrders("ing");
         this.getPrice();
+        this.getSaler();
     }
-    @observable Paper = [];
+
+    @observable orders = [];
     @observable InputBox = {
         _id:"",
+        time:"",
         orderNum: "",
-        platform: "sss",
-        adultNum: "sss",
-        childNum: "sss",
-        totalMoney: "ss",
-        payWay: "sss",
-        isReback: "sss",
-        ifFinish: "ed"
+        platform: "",
+        payWay: "",//票价
+        deposite: "",//押金
+        adultNum: "",
+        childNum: "",
+        totalMoney: "",
+        isReback: "",
+        ifFinish: "",
+        saler:""
     };
 
     @observable price = {
         _id:"",
-        "adultPrice": "80",
-        "childPrice": "40",
-        "plupPrice": "50",
-        "clothPrice": "30"
+        adultPrice: 80,
+        childPrice: 40,
+        plupPrice: 50,
+        clothPrice: 30
     };
 
-    @observable activeClass = "will";
+    @observable activeClass = "ing";
 
     @observable show = true;
 
-    @computed get PaperLength(){
-        return this.Paper.length;
+    @observable saler = "";
+
+    @observable filterStr = "all";
+    @observable filterTime = [];
+    @observable filterplat = "各平台";
+    @observable modal1Visible = false;
+
+
+    @computed get ordersLength(){
+        return this.orders.length;
     }
 
     @action
     handleInputBoxInput(key,value){
         this.InputBox[key]=value;
+        this.InputBox.totalMoney =
+        Number(this.InputBox.adultNum)*Number(this.price.adultPrice)
+        + Number(this.InputBox.childNum)*Number(this.price.childPrice)
+        + (Number(this.InputBox.adultNum)+Number(this.InputBox.childNum))*Number(this.price.clothPrice)
+        + Number(this.InputBox.adultNum)*Number(this.price.plupPrice)
     };
 
     @action
-    addPaper(item){
-        this.Paper.push(item)
-    }
+    addOneOrders=(item)=>{
+        this.orders.push(item)
+    };
 
     @action
-    getPaper=(e)=>{
-        this.Paper = [];
+    setOrders=(data)=>{
+        this.orders = [];
+        data.map((item)=>{
+            item.key = new Date() + Math.random();
+            this.addOneOrders(item);
+            return item.id
+        })
+    };
+    @action
+    getOrders=(e)=>{
+        this.activeClass = e;
         let router = '/admin/Data?name=' + e.toLocaleLowerCase();
         axios.get(router)
             .then((res)=>{
                 if (res.status === 200){
-                    res.data.map((item)=>{
-                        this.addPaper(item)
-                    })
+                    this.setOrders(res.data)
                 }
                 else {
                     console.log("error")
@@ -75,7 +103,8 @@ class StoreOrder {
             .then((res)=>{
                 if (res.status === 200){
                     res.data.map((item)=>{
-                        this.price = item
+                        this.price = item;
+                        return item.id
                     })
                 }
                 else {
@@ -86,25 +115,54 @@ class StoreOrder {
                 console.log(error);
             });
     };
+
+    @action
+    setSaler=(value)=>{
+        this.saler=value;
+    };
+
+    @action
+    getSaler=()=>{
+        axios.get( '/admin/getSaler')
+            .then((res)=>{
+                if (res.status === 200){
+                    this.setSaler(res.data.username);
+                }
+                else {
+                    console.log("error")
+                }
+            })
+            .catch( (error)=>{
+                console.log(error);
+            });
+    };
+
     @action
     setInput=(value)=>{
         this.InputBox = methods.deepClone(value);
         this.show = true;
     };
+
     @action
-    clearInput=()=>{
+    initInput=()=>{
         for(var i in this.InputBox) {
-                this.InputBox[i] = "";
+                this.InputBox[i] = 0;
         }
+        this.InputBox._id = "";
+        this.InputBox.isReback = "no";
+        this.InputBox.ifFinish = "ing";
+        this.InputBox.saler = this.saler;
     };
+
     inputUpdate = () =>{
         let router;
         if (this.InputBox._id === ""){
             console.log(this.InputBox);
-            router = '/admin/insertPaper'
+            router = '/admin/insertoneOrder';
         }
         else{
-            router = '/admin/updatePaper'
+            console.log("this.InputBox");
+            router = '/admin/updateoneOrder'
         }
         axios.post(router,this.InputBox)
             .then((res)=>{
@@ -121,7 +179,6 @@ class StoreOrder {
             });
         this.reLode()
     };
-
     handleDelete=()=>{
         axios.post('/admin/deleteOne',this.InputBox)
             .then((res)=>{
@@ -153,22 +210,9 @@ class StoreOrder {
             });
     };
     reLode=()=>{
-        let e = "paper";
-        if(this.Paper.length !== 0){
-            if (this.Paper[0].type === "patent") {
-                e = "patent";
-            }
-            if (this.Paper[0].type === "software_copyright") {
-                e = "software_copyright";
-            }
-            if (this.Paper[0].type === "awards") {
-                e = "awards";
-            }
-        }
-        this.getPaper(e)
+        let e = "all";
+        this.getOrders(e)
     };
-
-
     getClassName=(e)=>{
         if(this.activeClass === e){
             return " linkActive"
@@ -177,8 +221,50 @@ class StoreOrder {
             return ""
         }
     };
-    setClassName=(e)=>{
-        this.activeClass = e
+    fiter=()=>{
+        let newOrder = [];
+        var getIn = true;
+        //完成度筛选
+        this.orders.map((item)=>{
+            if (this.filterStr !== "all" && item.ifFinish !== this.filterStr){
+                getIn = false;
+            }
+
+            if (this.filterTime.length !== 0
+                &&!moment(this.filterTime[0]).isSame(item.time, 'day')
+                &&!moment(this.filterTime[1]).isSame(item.time, 'day')
+                &&!moment(item.time).isBetween(this.filterTime[0].format('YYYY-MM-DD'),this.filterTime[1].format('YYYY-MM-DD')))
+            {
+                getIn = false;
+            }
+
+            if ( this.filterplat !== "各平台" && item.platform !== this.filterplat) {
+                getIn = false;
+            }
+
+            if (getIn) {
+                newOrder.push(item);
+            }
+            getIn = true;
+        });
+        return newOrder
+    };
+
+    @action
+    setFilishFilter=(key)=>{
+        this.filterStr = key;
+    };
+    @action
+    setTimefilter=(dates)=>{
+        this.filterTime = dates;
+    };
+    @action
+    setPlatFilter=(values)=>{
+        this.filterplat = values;
+    };
+    @action
+    setModal1Visible=(values)=>{
+        this.modal1Visible = values;
     }
 }
 export default new StoreOrder();

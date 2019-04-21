@@ -18,7 +18,9 @@ class InputNewOrder extends Component{
                         {/*// <!-- 模态框头部 -->*/}
                         <div className="modal-header">
                             <h4 className="modal-title">
-                                新建订单
+                                {
+                                    StoreOrder.InputBox._id === ""?("新建订单"):("修改订单")
+                                }
                             </h4>
                             <button type="button" className="close" data-dismiss="modal">&times;</button>
                         </div>
@@ -30,28 +32,24 @@ class InputNewOrder extends Component{
                                     className="message_form"
                                     method="post"
                                 >
-                                    {
-                                        StoreOrder.InputBox._id === "" ?(
-                                                <DropDownPlat />
-                                            )
-                                            :null
-                                    }
                                     <div>
-                                        <DropDownPay />
+                                        <DropDownPlat />
                                     </div>
                                     <div>
-                                        <DropDownPerson
-                                            personType = {"成人"}
-                                        />
+                                        <DropDownPay payType = {"payWay"} />
+                                    </div>
+                                    <div>
+                                        <DropDownPay payType = {"deposite"} />
+                                    </div>
+                                    <div>
+                                        <DropDownPerson personType = {"成人"} />
                                         <span>
                                             {StoreOrder.price.adultPrice}
                                             元/人
                                         </span>
                                     </div>
                                     <div>
-                                        <DropDownPerson
-                                            personType = {"儿童"}
-                                        />
+                                        <DropDownPerson personType = {"儿童"} />
                                         <span>
                                             {StoreOrder.price.childPrice}
                                             元/人
@@ -59,48 +57,32 @@ class InputNewOrder extends Component{
                                     </div>
                                     <div>
                                         <p>
-                                            安全服：{StoreOrder.price.clothPrice}
-                                            元/人
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p>
-                                            浆板：{StoreOrder.price.plupPrice}
-                                            元/人
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p>
-                                            总价
-                                        </p>
-                                    </div>
-                                    {/*<div className={"message_name"}>*/}
-                                        {/*isReback:*/}
-                                    {/*</div>*/}
-                                    {/*<div className="input_message">*/}
-                                        {/*<input*/}
-                                            {/*type="text"*/}
-                                            {/*required="required"*/}
-                                            {/*placeholder="是否退发票"*/}
-                                            {/*name="isReback"*/}
-                                            {/*value={StoreOrder.InputBox.isReback}*/}
-                                            {/*onChange={(e)=>StoreOrder.handleInputBoxInput(e.target.name,e.target.value)}*/}
-                                        {/*/>*/}
-                                    {/*</div>*/}
-                                    {/*<div className={"message_name"}>*/}
-                                        {/*payWay:*/}
-                                    {/*</div>*/}
-                                    {/*<div className="input_message">*/}
-                                        {/*<input*/}
-                                            {/*type="text"*/}
-                                            {/*required="required"*/}
-                                            {/*placeholder="video link"*/}
-                                            {/*name="payWay"*/}
-                                            {/*value={StoreOrder.InputBox.video}*/}
-                                            {/*onChange={(e)=>StoreOrder.handleInputBoxInput(e.target.name,e.target.value)}*/}
 
-                                        {/*/>*/}
-                                    {/*</div>*/}
+                                            安全服：
+                                            { Number(StoreOrder.InputBox.adultNum) + Number(StoreOrder.InputBox.childNum) }
+                                            *
+                                            { StoreOrder.price.clothPrice }
+                                            元/人
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            浆板：
+                                            {StoreOrder.InputBox.adultNum}
+                                            *
+                                            {StoreOrder.price.plupPrice}
+                                            元/人
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            总价：
+                                            {
+                                                StoreOrder.InputBox.totalMoney
+                                            }
+                                            元
+                                        </p>
+                                    </div>
                                     <div className="btn_item message_btn">
                                         <button
                                             id="my_submit"
@@ -108,7 +90,6 @@ class InputNewOrder extends Component{
                                             className="button login_in"
                                             onClick={StoreOrder.inputUpdate}
                                             data-dismiss="modal"
-
                                         >
                                             提交
                                         </button>
