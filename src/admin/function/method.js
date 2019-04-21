@@ -21,6 +21,10 @@ let judgeDay = (a,b) =>{
     }
     return true;
 };
-exports.deepClone = deepClone;
-exports.judgeDay = judgeDay;
+// exports.deepClone = deepClone;
+// exports.judgeDay = judgeDay;
 
+export {
+    deepClone,
+    judgeDay
+}

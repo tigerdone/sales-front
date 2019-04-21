@@ -16,7 +16,8 @@ class SelectTime extends Component {
                 onChange = {StoreOrder.setTimefilter}
                 // defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
                 format={dateFormat}
-                value={StoreOrder.filterTime}
+                value={StoreOrder.filterTime.slice()}
+                placeholder = {["开始时间","结束时间"]}
             />
         )
     }

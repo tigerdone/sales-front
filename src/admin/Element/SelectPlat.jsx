@@ -3,10 +3,6 @@ import {inject, observer} from "mobx-react";
 import { Select } from 'antd';
 const Option = Select.Option;
 
-function handleChange(value) {
-    console.log(`selected ${value}`);
-}
-
 export default
 @inject('StoreOrder')
 @observer

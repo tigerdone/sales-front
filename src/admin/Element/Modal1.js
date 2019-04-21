@@ -75,7 +75,12 @@ class MyTable extends Component{
                         <span>
                             已完成：
                         </span>
-                        <Checkbox onChange={(value) =>StoreOrder.setIfFinish(value)}>
+                        <Checkbox
+                            onChange={(value) =>StoreOrder.setIsReback(value)}
+                            checked={
+                                StoreOrder.InputBox.isReback === "true"
+                            }
+                        >
                         </Checkbox>
                     </div>
             </Modal>

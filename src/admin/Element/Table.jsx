@@ -1,4 +1,4 @@
-import {Table, Tabs, Input, Button, Modal} from 'antd';
+import {Table, Tabs, Input, Button} from 'antd';
 import  React,{Component} from "react"
 import OrderLine from  "./OrderLine"
 // import {observable} from "mobx";
@@ -38,6 +38,8 @@ const columns = [{
     title: '是否退押金',
     dataIndex: 'isReback',
     key: 'isReback',
+    render: (text) =>
+        text === "true"?"是":"否"
 },{
     title: '售票员',
     dataIndex: 'saler',
@@ -47,7 +49,7 @@ const columns = [{
     key: '_id',
     render: (index,record,text) => (
             <OrderLine record = {record} text = {text} index = {index} />
-    ),
+    )
 }];
 
 export default
@@ -89,6 +91,7 @@ class MyTable extends Component{
                 <Table
                     columns={columns}
                     dataSource={StoreOrder.fiter()}
+                    rowKey="key"
                 />
                 <div className={"newOrder"}>
                     <Button
@@ -101,7 +104,7 @@ class MyTable extends Component{
                         </span>
                     <Button
                         type="primary"
-                        onClick={() => StoreOrder.setmodalInputBox(true)}
+                        onClick={() => StoreOrder.newOrder()}
                     >
                         新建
                     </Button>

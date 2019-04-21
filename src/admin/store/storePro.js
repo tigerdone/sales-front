@@ -1,6 +1,6 @@
 import { action, observable } from "mobx";
 import axios from "axios";
-import methods from "../function/method";
+// import methods from "../function/method";
 
 class StorePro{
     constructor(){
@@ -27,7 +27,7 @@ class StorePro{
         defaultFileList: []
     };
     @action setInput = (item) =>{
-        this.InputBox = methods.deepClone(item);
+        this.InputBox =  JSON.parse(JSON.stringify(item));
     };
     @action addPicture(e){
         if (e.file.response === "OK") {

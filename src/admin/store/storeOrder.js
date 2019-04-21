@@ -1,12 +1,11 @@
-import {
-    observable,
-    action,
-    computed,
-    configure,
-} from 'mobx'
-import axios from 'axios'//发送ajax 请求
+import {action, computed, configure, observable,} from 'mobx'
+import axios from 'axios' //发送ajax 请求
+import {deepClone} from "../function/method.js"
+
 configure({ enforceActions: "observed" });
 const moment = require('moment');
+// import methods from "../function/method";
+
 
 class StoreOrder {
     constructor() {
@@ -67,13 +66,15 @@ class StoreOrder {
     };
     @action
     setOrders=(data)=>{
-        this.orders = [];
+        let box = [];
         data.map((item)=>{
             item.key = new Date() + Math.random();
             item.personNum = parseInt(item.childNum) + parseInt(item.adultNum);
-            this.addOneOrders(item);
+            box.push(item);
+            // console.log("sdfsdfsdfsdf");
             return item.id
-        })
+        });
+        this.orders.replace(box)
     };
     @action
     getOrders=(e)=>{
@@ -112,8 +113,13 @@ class StoreOrder {
     };
     @action
     setmodalInputBox=(values)=>{
-        this.initInput();
+        // this.initInput();
         this.modalInputBox = values;
+    };
+    @action
+    newOrder=()=>{
+        this.initInput();
+        this.setmodalInputBox(true);
     };
     @action
     setDeleModal=(values)=>{
@@ -148,17 +154,16 @@ class StoreOrder {
                 this.InputBox[i] = 0;
         }
         this.InputBox._id = "";
-        this.InputBox.isReback = "no";
+        this.InputBox.isReback = "false";
         this.InputBox.ifFinish = "ing";
         this.InputBox.saler = this.saler;
         this.InputBox.platform = "现场";
         this.InputBox.payWay = "现金";
         this.InputBox.deposite = "现金";
-
     };
     @action
     updateInput=(record,tag)=>{
-        this.InputBox = record;
+        this.InputBox =  deepClone(record);
         if (tag === "repaire") {
             this.modalInputBox = true;
         }
@@ -166,12 +171,11 @@ class StoreOrder {
             this.deleModal = true;
         }
     };
-
     @action
-    setIfFinish=(value)=>{
-        this.InputBox.ifFinish = value
+    setIsReback=(e)=>{
+        this.InputBox.isReback = e.target.checked?"true":"false";
+        this.InputBox.ifFinish = e.target.checked?"ed":"ing";
     };
-
 
     //数据交互
     inputUpdate=() =>{
@@ -181,14 +185,15 @@ class StoreOrder {
             router = '/admin/insertoneOrder';
         }
         else{
-            console.log("this.InputBox");
+            // console.log("this.InputBox");
             router = '/admin/updateoneOrder';
         }
         axios.post(router,this.InputBox)
             .then((res)=>{
                 if (res.status === 200){
                     this.setmodalInputBox(false);
-                    alert("提交成功")
+                    alert("提交成功");
+                    this.getOrders(this.activeClass);
                 }
                 else {
                     console.log("error")
@@ -251,13 +256,19 @@ class StoreOrder {
             if (this.filterStr !== "all" && item.ifFinish !== this.filterStr){
                 getIn = false;
             }
-            if (this.filterTime.length !== 0
-                &&!moment(this.filterTime[0]).isSame(item.time, 'day')
-                &&!moment(this.filterTime[1]).isSame(item.time, 'day')
-                &&!moment(item.time).isBetween(this.filterTime[0].format('YYYY-MM-DD'),this.filterTime[1].format('YYYY-MM-DD')))
+
+            let timebox = this.filterTime.slice();
+            let startTime = moment(timebox[0]).format("YYYY-MM-DD");
+            let endTime = moment(timebox[1]).format("YYYY-MM-DD");
+            if (this.filterTime.length >= 2
+                &&!moment(startTime).isSame(item.time)
+                &&!moment(endTime).isSame(item.time)
+                &&!moment(item.time).isBetween(startTime, endTime)
+            )
             {
                 getIn = false;
             }
+
             if ( this.filterplat !== "各平台" && item.platform !== this.filterplat) {
                 getIn = false;
             }
@@ -269,6 +280,7 @@ class StoreOrder {
                 newOrder.push(item);
             }
             getIn = true;
+            return item._id;
         });
         return newOrder
     };
