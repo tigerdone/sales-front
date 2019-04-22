@@ -77,7 +77,6 @@ class NormalLoginForm extends Component {
                                     })(
                                         <Checkbox>记住我</Checkbox>
                                     )}
-                                    {/*<a className="login-form-forgot" href="">Forgot password</a>*/}
                                     <span className={"message"}>
                                         {StoreLogin.message}
                                     </span>
@@ -89,7 +88,6 @@ class NormalLoginForm extends Component {
                                         id="my_submit"
                                         onClick={()=>{StoreLogin.handleLogin()}}
                                     >
-
                                         登录
                                     </Button>
                                     {/*Or <a href="">register now!</a>*/}

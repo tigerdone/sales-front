@@ -1,8 +1,8 @@
 import React,{Component} from 'react'
 import Item from './ItemPro'
 import {observer,inject} from 'mobx-react'
-import InputPro from '../input/InputPro'
-import ProDeleteConfirm from "../input/ProDeleConfirm";
+import InputPro from '../../input/InputPro'
+import ProDeleteConfirm from "../../input/ProDeleConfirm";
 
 export default
 @inject('StorePro')

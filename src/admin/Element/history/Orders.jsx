@@ -1,8 +1,8 @@
 import React,{Component} from 'react'
-import ItemOrders from './ItemOrders'
+import ItemOrders from '../ItemOrders'
 import {observer,inject} from 'mobx-react'
-import InputNewOrder from "../input/InputNewOrder";
-import DeleteConfirm from "../input/DeleteConfirm";
+import InputNewOrder from "../../input/InputNewOrder";
+import DeleteConfirm from "../../input/DeleteConfirm";
 
 @inject('StoreOrder')
 @observer

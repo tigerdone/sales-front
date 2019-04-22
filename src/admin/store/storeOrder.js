@@ -6,7 +6,6 @@ configure({ enforceActions: "observed" });
 const moment = require('moment');
 // import methods from "../function/method";
 
-
 class StoreOrder {
     constructor() {
         this.getOrders("ing");
@@ -41,6 +40,7 @@ class StoreOrder {
     @observable saler = "";
     @observable modalInputBox = false;
     @observable deleModal = false;
+    @observable filterNum = 0;
 
     //filter
     @observable filterStr = "all";
@@ -176,6 +176,12 @@ class StoreOrder {
         this.InputBox.isReback = e.target.checked?"true":"false";
         this.InputBox.ifFinish = e.target.checked?"ed":"ing";
     };
+    @action
+    setFilter=(value)=>{
+        this.filterNum = value;
+    };
+
+
 
     //数据交互
     inputUpdate=() =>{
@@ -193,7 +199,8 @@ class StoreOrder {
                 if (res.status === 200){
                     this.setmodalInputBox(false);
                     alert("提交成功");
-                    this.getOrders(this.activeClass);
+                    // this.getOrders(this.activeClass);
+                    this.reLode()
                 }
                 else {
                     console.log("error")
@@ -203,7 +210,6 @@ class StoreOrder {
                 console.log(error);
                 alert("提交失败")
             });
-        this.reLode()
     };
     handleDelete=()=>{
         this.setDeleModal(false);
@@ -256,7 +262,6 @@ class StoreOrder {
             if (this.filterStr !== "all" && item.ifFinish !== this.filterStr){
                 getIn = false;
             }
-
             let timebox = this.filterTime.slice();
             let startTime = moment(timebox[0]).format("YYYY-MM-DD");
             let endTime = moment(timebox[1]).format("YYYY-MM-DD");
@@ -268,20 +273,19 @@ class StoreOrder {
             {
                 getIn = false;
             }
-
             if ( this.filterplat !== "各平台" && item.platform !== this.filterplat) {
                 getIn = false;
             }
             if (this.inputSearch !== "" && item.orderNum !== this.inputSearch){
                 getIn = false;
             }
-
             if (getIn) {
                 newOrder.push(item);
             }
             getIn = true;
             return item._id;
         });
+        this.setFilter(newOrder.length);
         return newOrder
     };
 

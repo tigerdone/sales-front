@@ -6,11 +6,9 @@ import { Spin, Switch, Alert } from 'antd';
 @observer
 class Card extends React.Component {
     state = { loading: true };
-
     toggle = (value) => {
         this.setState({ loading: value });
     };
-
     render() {
         return (
             <div>

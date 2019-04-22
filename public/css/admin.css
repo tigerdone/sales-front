@@ -192,4 +192,12 @@
     justify-content: space-between;
     margin: 20px 0;
 }
-
+.total{
+    float: left;
+    font-size: 20px;
+    position:  relative;
+    top: -61px;
+}
+.myTable tbody{
+    /*height: 460px;*/
+}

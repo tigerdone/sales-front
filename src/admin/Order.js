@@ -1,6 +1,5 @@
 import React,{Component,Fragment} from 'react'
 import {observer,inject} from 'mobx-react';
-import Table from "./Element/Table";
 import { Button } from 'antd';
 
 @inject('StoreOrder')
@@ -29,10 +28,7 @@ class Order extends Component{
                     {StoreOrder.saler}
                     </span>
                 </div>
-                <h4 className={"stair1Title"}>
-                    -订单状态
-                </h4>
-                <Table />
+                {this.props.children}
             </Fragment>
         )
     }

@@ -1,9 +1,9 @@
 import {inject, observer} from "mobx-react";
 import React,{ Component } from "react"
 import { Modal,Checkbox } from "antd";
-import DropDownPlat from '../input/DropDownPlat'
-import DropDownPay from '../input/DropDownPay'
-import DropDownPerson from '../input/DropDownPerson'
+import DropDownPlat from '../../input/DropDownPlat'
+import DropDownPay from '../../input/DropDownPay'
+import DropDownPerson from '../../input/DropDownPerson'
 
 export default
 @inject('StoreOrder')

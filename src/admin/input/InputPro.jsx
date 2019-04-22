@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import {observer,inject} from 'mobx-react'
-import Image from "../Element/Image";
-import Textarea from "../Element/Textarea";
+import Image from "../Element/history/Image";
+import Textarea from "../Element/history/Textarea";
 import ItemInput from "./ItemInput";
 
 @inject('StorePro')

@@ -3,23 +3,23 @@ import React,{Component} from  'react';
 import {inject, observer} from "mobx-react";
 
 export default
-@inject('StoreOrder')
+@inject('StoreSet')
 @observer
 class OrderLine extends Component {
     render() {
-        const {StoreOrder,record} = this.props;
+        const {StoreSet,record} = this.props;
         return (
             <div>
                 <Button
                     type="primary"
-                    onClick={() => StoreOrder.updateInput(record,"repaire")}
+                    onClick={() => StoreSet.updateInput(record,"repaire")}
                 >
                     修改
                 </Button>
                 <Divider type="vertical" />
                 <Button
                     type="primary"
-                    onClick={() => StoreOrder.updateInput(record,"delete")}
+                    onClick={() => StoreSet.updateInput(record,"delete")}
                 >
                     删除
                 </Button>
