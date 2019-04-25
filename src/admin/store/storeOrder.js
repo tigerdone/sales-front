@@ -1,6 +1,9 @@
-import {action, computed, configure, observable,} from 'mobx'
+import {action, computed, configure, observable, autorun} from 'mobx'
 import axios from 'axios' //发送ajax 请求
-import {deepClone} from "../function/method.js"
+import { deepClone } from "../function/method.js"
+import { createTransformer } from 'mobx-utils'
+
+
 
 configure({ enforceActions: "observed" });
 const moment = require('moment');
@@ -11,7 +14,51 @@ class StoreOrder {
         this.getOrders("ing");
         this.getPrice();
         this.getSaler();
+        // this.initTest();
     }
+    @observable store = [];
+    @observable states = [];
+
+    @action
+    initTest=()=>{
+        autorun(() => {
+            this.states = (this.serializeState(this.store));
+        });
+    };
+    serializeState = createTransformer(store => store.map(
+        this.serializeBox
+    ));
+
+    serializeBox = createTransformer(item => {
+        // {...box}
+        let getIn = true;
+        if (this.filterStr !== "all" && item.ifFinish !== this.filterStr){
+            getIn = false;
+        }
+        let timebox = this.filterTime.slice();
+        let startTime = moment(timebox[0]).format("YYYY-MM-DD");
+        let endTime = moment(timebox[1]).format("YYYY-MM-DD");
+        if (this.filterTime.length >= 2
+            &&!moment(startTime).isSame(item.time)
+            &&!moment(endTime).isSame(item.time)
+            &&!moment(item.time).isBetween(startTime, endTime)
+        )
+        {
+            getIn = false;
+        }
+        if ( this.filterplat !== "各平台" && item.platform !== this.filterplat) {
+            getIn = false;
+        }
+        if (this.inputSearch !== "" && item.orderNum !== this.inputSearch){
+            if (this.Searching){
+                getIn = false;
+            }
+        }
+        if (getIn) {
+            return item;
+            // newOrder.push(item);
+        }
+    });
 
     @observable orders = [];
     @observable InputBox = {
@@ -47,6 +94,8 @@ class StoreOrder {
     @observable filterTime = [];
     @observable filterplat = "各平台";
     @observable inputSearch = "";
+    @observable Searching = false;
+
 
     @computed get ordersLength(){
         return this.orders.length;
@@ -74,7 +123,9 @@ class StoreOrder {
             // console.log("sdfsdfsdfsdf");
             return item.id
         });
-        this.orders.replace(box)
+        this.orders.replace(box);
+
+        this.store = (box);
     };
     @action
     getOrders=(e)=>{
@@ -98,10 +149,12 @@ class StoreOrder {
         axios.get( '/admin/price')
             .then((res)=>{
                 if (res.status === 200){
-                    res.data.map((item)=>{
-                        this.setPrice(item);
-                        return item.id
-                    })
+                    // res.data.map((item)=>{
+                    //     console.log(item);
+                    //     this.setPrice(item);
+                    //     return item.id
+                    // })
+                    this.setPrice(res.data[0]);
                 }
                 else {
                     console.log("error")
@@ -180,8 +233,10 @@ class StoreOrder {
     setFilter=(value)=>{
         this.filterNum = value;
     };
-
-
+    @action
+    writeSearch=(e)=>{
+        this.inputSearch = e.target.value;
+    };
 
     //数据交互
     inputUpdate=() =>{
@@ -199,7 +254,6 @@ class StoreOrder {
                 if (res.status === 200){
                     this.setmodalInputBox(false);
                     alert("提交成功");
-                    // this.getOrders(this.activeClass);
                     this.reLode()
                 }
                 else {
@@ -256,9 +310,10 @@ class StoreOrder {
     };
     fiter=()=>{
         let newOrder = [];
-        var getIn = true;
+        let getIn = true;
         //完成度筛选
         this.orders.map((item)=>{
+
             if (this.filterStr !== "all" && item.ifFinish !== this.filterStr){
                 getIn = false;
             }
@@ -277,7 +332,9 @@ class StoreOrder {
                 getIn = false;
             }
             if (this.inputSearch !== "" && item.orderNum !== this.inputSearch){
-                getIn = false;
+                if (this.Searching){
+                    getIn = false;
+                }
             }
             if (getIn) {
                 newOrder.push(item);
@@ -293,6 +350,9 @@ class StoreOrder {
     @action
     setFilishFilter=(key)=>{
         this.filterStr = key;
+        autorun(() => {
+            this.states = (this.serializeState(this.store));
+        });
     };
     @action
     setTimefilter=(dates)=>{
@@ -305,6 +365,7 @@ class StoreOrder {
     @action
     setInputSearch=(values)=>{
         this.inputSearch = values;
+        this.Searching = true;
     };
     @action
     setInitFilter=()=>{

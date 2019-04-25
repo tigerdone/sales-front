@@ -20,7 +20,6 @@ class StoreLogin {
     loginInputBoxInput=(key,value)=>{
         this.loginInputBox[key]=value;
     };
-
     @action
     setIsLoading=(value)=>{
         this.isLoading=value;
@@ -29,22 +28,21 @@ class StoreLogin {
     setSaler=(value)=>{
         this.saler=value;
     };
-
     @action
     handleLogin=()=>{
-        console.log(this.loginInputBox.inputName, '提交数据');
+        // console.log(this.loginInputBox.inputName, '提交数据');
         this.setIsLoading(true);
         axios.post('/admin/login',this.loginInputBox)
             .then((res)=>{
                 if (res.data.isLogined === true){
-                    this.setIsLoading(false);
+                    this.setIsLoading(true);
                     this.setSaler(this.loginInputBox.inputName);
                     window.location.hash = "#/order";
                 }
                 else if (res.data.isLogined === false){
-                    console.log("error");
-                    this.message = "密码错误";
-                    this.isLoading = false;
+                    // console.log("error");
+                    this.setMessage("密码错误");
+                    this.setIsloading(false);
                 }
             })
             .catch(function (error) {
@@ -52,10 +50,20 @@ class StoreLogin {
             });
     };
 
+    @action
+    setIsloading = (value) => {
+        this.isLoading = value;
+    };
+    @action
+    setMessage = (value) => {
+        this.message = value;
+    };
+
+
     isAdmin = (nextState, replaceState,cd) =>{
         axios.get('/admin/checkLogin')
             .then((res)=>{
-                console.log(res.data.isLogined);
+                console.log("res.data.isLogined:"+res.data.isLogined);
                 if (!res.data.isLogined){
                     replaceState({ pathname: '/login' });
                     cd();

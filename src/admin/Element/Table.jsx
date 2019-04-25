@@ -80,6 +80,8 @@ class MyTable extends Component{
                             placeholder="请输入编号查询"
                             onSearch={value => StoreOrder.setInputSearch(value)}
                             enterButton
+                            value={StoreOrder.inputSearch}
+                            onChange={e => StoreOrder.writeSearch(e)}
                         />
                     </div>
                 </div>

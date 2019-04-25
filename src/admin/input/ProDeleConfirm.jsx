@@ -1,7 +1,6 @@
 import React,{Component} from 'react'
 import {observer,inject} from 'mobx-react'
 
-
 @inject('StorePro')
 @observer
 class Input extends Component{

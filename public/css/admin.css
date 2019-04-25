@@ -143,6 +143,8 @@
 .message{
     color: #f00;
     float: right;
+    /* margin: 0 0 70px 0; */
+    /* text-align:  right; */
 }
 
 /*---------------ant-design------------*/
@@ -154,7 +156,7 @@
     font-weight: 500;
     /* background: #d3d2d2; */
     padding: 5px;
-    /* margin: 0 0 23px 0; */
+    margin: 0 0 23px 0;
 }
 .header{
     font-size: 20px;
@@ -200,4 +202,38 @@
 }
 .myTable tbody{
     /*height: 460px;*/
+}
+.userInput{
+    display: inline-block;
+    margin: 0 0 0 20px;
+}
+.inputBox{
+    display: flex;
+    justify-content: space-between;
+    margin: 26px;
+    /*font-size: 20px;*/
+}
+.inputBoxSpan{
+    line-height: 33px;
+    /* position:  relative; */
+    /* top: 5px; */
+}
+.usermessage{
+    color: #f00;
+}
+.newUserMessage{
+    color: #f00;
+    /* float: right; */
+    /* margin: 0 0 70px 0; */
+    text-align:  right;
+    padding: 0 27px 0 0;
+}
+.storeModalInput{
+    display: flex;
+    justify-content: space-between;
+    margin:  20px 0;
+}
+.storeModalInput > span{
+    width: 100px;
+    line-height: 34px;
 }

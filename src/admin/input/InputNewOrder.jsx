@@ -5,7 +5,6 @@ import DropDownPlat from './DropDownPlat'
 import DropDownPay from './DropDownPay'
 import DropDownPerson from './DropDownPerson'
 
-
 @inject('StoreOrder')
 @observer
 class InputNewOrder extends Component{
@@ -109,6 +108,5 @@ class InputNewOrder extends Component{
         )
     }
 }
-
 
 export default InputNewOrder;

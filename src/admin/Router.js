@@ -17,7 +17,7 @@ class index extends Component{
                 <Route path='/login' component={Login}/>
                 <Route path='/order' component={Order} onEnter={StoreLogin.isAdmin}>
                     <IndexRoute component={IndexBox}/>
-                    <Route path='setting' component={Setting} onEnter={StoreLogin.isAdmin}/>
+                    <Route path='setting' component={Setting}/>
                 </Route>
             </Router>
         )
