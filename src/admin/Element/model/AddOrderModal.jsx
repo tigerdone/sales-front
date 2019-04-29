@@ -61,9 +61,9 @@ class MyTable extends Component{
                         </span>
                     </div>
                     <div className={"OrderItem"}>
-                            <span>
-                                联系方式：
-                            </span>
+                        <span>
+                            联系方式：
+                        </span>
                         <span>
                             <Input
                                 value={StoreOrder.InputBox.phoneNumber}

@@ -22,7 +22,7 @@ class OrderLine extends Component {
                     type="primary"
                     onClick={() => StoreOrder.getInvoice(record)}
                 >
-                    发票
+                    开票
                 </Button>
                 <Divider type="vertical" />
                 <Button

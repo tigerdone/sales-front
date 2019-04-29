@@ -11,7 +11,7 @@ class StoreOrder {
         this.getSaler();
         this.getOrders("ing");
         this.getPrice();
-        this.getUerMessage();
+        // this.getUerMessage();
     }
     @observable store = [];
     @observable orders = [];
@@ -161,7 +161,6 @@ class StoreOrder {
     @action
     setPrice=(item)=>{
         this.price = item;
-        // console.log(JSON.stringify(this.price));
     };
     @action
     setSaler=(value)=>{
@@ -231,10 +230,11 @@ class StoreOrder {
     };
 
     getInvoice=(record)=>{
-        axios.post("/admin/initWord",record)
+        axios.post("/admin/initPdf",record)
             .then((res)=>{
                 if (res.status === 200){
-                    this.getword();
+                    window.open("http://127.0.0.1/pdf/pdf"+this.userMessage.username+".pdf","_blank");
+                    console.log("ok");
                 }
                 else {
                     console.log("error")
@@ -309,7 +309,8 @@ class StoreOrder {
     reload=()=>{
         let e = "all";
         this.getOrders(e);
-        this.getPrice()
+        this.getPrice();
+        this.getUerMessage()
     };
     getClassName=(e)=>{
         if(this.activeClass === e){

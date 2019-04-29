@@ -26,9 +26,13 @@ const columns = [{
     dataIndex: 'deposite',
     key: 'deposite',
 },{
-    title: '人数',
-    dataIndex: 'personNum',
-    key: 'personNum',
+    title: '成人',
+    dataIndex: 'adultNum',
+    key: 'adultNum',
+},{
+    title: '儿童',
+    dataIndex: 'childNum',
+    key: 'childNum',
 },{
     title: '总价',
     dataIndex: 'totalMoney',
@@ -89,7 +93,7 @@ class MyTable extends Component{
                         />
                     </div>
                 </div>
-                <Tabs onChange={StoreOrder.setFilishFilter} type="card">
+                <Tabs className={"tags"} onChange={StoreOrder.setFilishFilter} type={"card"}>
                     <TabPane tab="所有" key="all">
                     </TabPane>
                     <TabPane tab="待完成" key="ing">
@@ -97,7 +101,9 @@ class MyTable extends Component{
                     <TabPane tab="已完成" key="ed">
                     </TabPane>
                 </Tabs>
+
                 <Table
+                    bordered
                     columns={columns}
                     dataSource={StoreOrder.fiter}
                     rowKey="key"
