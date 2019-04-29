@@ -15,9 +15,10 @@ class MyTable extends Component{
                 centered
                 visible={StorePrice.modalInputBox}
                 onOk={StorePrice.inputUpdate}
-                onCancel={() => StorePrice.setModalInOut(false)}
+                onCancel={() => StorePrice.setmodalInputBox(false)}
                 width = {400}
                 className={"myModal1"}
+                maskClosable={false}
             >
                 <div>
                     <div className={"storeModalInput"}>
@@ -25,7 +26,7 @@ class MyTable extends Component{
                             物品名称：
                         </span>
                         <span>
-                            {StorePrice.InputBox.name}
+                            {StorePrice.InputBox.ZHname}
                         </span>
                     </div>
                     <div className={"storeModalInput"}>

@@ -1,15 +1,14 @@
 import {Table, Tabs, Input, Button} from 'antd';
 import  React,{Component} from "react"
 import OrderLine from  "./OrderLine"
-// import {observable} from "mobx";
 import {inject, observer} from "mobx-react";
 import SelectTime from  "./SelectTime"
 import SelectPlat from  "./SelectPlat"
-import AddModal from "./model/AddModal"
-import DeleModal from "./model/DeleModal"
+import AddModal from "./model/AddOrderModal"
+import DeleModal from "./model/DeleOrderModal"
+
 const TabPane = Tabs.TabPane;
 const Search = Input.Search;
-
 const columns = [{
     title: '订单号',
     dataIndex: 'orderNum',
@@ -54,8 +53,13 @@ const columns = [{
 
 export default
 @inject('StoreOrder')
+@inject('StoreLogin')
 @observer
 class MyTable extends Component{
+    componentDidMount() {
+        const {StoreOrder} = this.props;
+        StoreOrder.getOrders();
+    }
     render() {
         const {StoreOrder} = this.props;
         return (
@@ -95,7 +99,7 @@ class MyTable extends Component{
                 </Tabs>
                 <Table
                     columns={columns}
-                    dataSource={StoreOrder.fiter()}
+                    dataSource={StoreOrder.fiter}
                     rowKey="key"
                     pagination={{ pageSize: 6 }}
                     className={"myTable"}
@@ -104,7 +108,7 @@ class MyTable extends Component{
                 <div className={"newOrder"}>
                     <div className={"total"}>
                         共
-                        {StoreOrder.filterNum}
+                        {StoreOrder.fiter.length}
                         条记录
                     </div>
                     <Button
@@ -121,14 +125,15 @@ class MyTable extends Component{
                     >
                         新建
                     </Button>
-                    <span className={"empty"}>
-                    </span>
-                    <Button
+                    <span className={"empty"} />
+                    {StoreOrder.userMessage.powerId === "2"?(
+                        <Button
                         type="primary"
                         onClick={() => window.location.hash = "#/order/setting"}
-                    >
+                        >
                         设置
-                    </Button>
+                        </Button>
+                    ):null}
                     <AddModal />
                     <DeleModal />
                 </div>

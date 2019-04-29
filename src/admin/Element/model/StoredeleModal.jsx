@@ -16,6 +16,7 @@ class MyTable extends Component{
                 onCancel={() => StoreStore.setDeleModal(false) }
                 okText="确认"
                 cancelText="取消"
+                maskClosable={false}
                 width={300}
             >
                 <div>

@@ -9,10 +9,14 @@ const RadioGroup = Radio.Group;
 @inject('StoreLogin')
 @observer
 class NormalLoginForm extends Component {
+    componentDidMount() {
+        const { StoreLogin } = this.props;
+        StoreLogin.initStore();
+    }
+
     render() {
         const { getFieldDecorator } = this.props.form;
-        const {StoreLogin} = this.props;
-
+        const { StoreLogin } = this.props;
         return (
             <div className="page">
                 <div className={"body_container"}>
@@ -25,7 +29,6 @@ class NormalLoginForm extends Component {
                                 登录
                             </p>
                             <Form
-                                // onSubmit={this.handleSubmit}
                                 className="login-form"
                             >
                                 <Form.Item>
@@ -59,13 +62,13 @@ class NormalLoginForm extends Component {
                                 </Form.Item>
                                 <Form.Item>
                                     <RadioGroup
-                                        onChange={(e)=>{StoreLogin.loginInputBoxInput("power_id",e.target.value)}}
-                                        defaultValue={1}
+                                        onChange={(e)=>{StoreLogin.loginInputBoxInput("powerId",e.target.value)}}
+                                        defaultValue={"1"}
                                     >
-                                        <Radio value={1} default>
+                                        <Radio value={"1"} default>
                                             管理员
                                         </Radio>
-                                        <Radio value={2}>
+                                        <Radio value={"2"}>
                                             超级管理员
                                         </Radio>
                                     </RadioGroup>
@@ -90,7 +93,6 @@ class NormalLoginForm extends Component {
                                     >
                                         登录
                                     </Button>
-                                    {/*Or <a href="">register now!</a>*/}
                                 </Form.Item>
                             </Form>
                         </div>

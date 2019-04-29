@@ -237,3 +237,10 @@
     width: 100px;
     line-height: 34px;
 }
+.orderMethod{
+    /* float: right; */
+    /* margin: 0 40px 0 0; */
+    display:  flex;
+    justify-content: flex-end;
+}
+

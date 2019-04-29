@@ -1,7 +1,7 @@
 import React,{Component} from "react"
 import {Button, Table} from "antd";
-import NewUserModal from "../model/NewUserModal";
-import DeleUser from "../model/DeleUser";
+import NewUserModal from "../model/AddUserModal";
+import DeleUser from "../model/DeleUserModal";
 import UserLine from "../UserLine"
 import {inject, observer} from "mobx-react";
 
@@ -55,7 +55,7 @@ class Userset extends Component{
                     </span>
                     <Button
                         type="primary"
-                        onClick={()=>{window.location.hash = "#/order";}}
+                        onClick={StoreSet.setFilish}
                     >
                         返回
                     </Button>

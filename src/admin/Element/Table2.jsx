@@ -3,7 +3,7 @@ import  React,{Component} from "react"
 import StoreLine from  "./StoreLine"
 import {inject, observer} from "mobx-react";
 import AddStoreModal from "./model/AddStoreModal"
-import GetInOut from "./model/StoreGetInOut"
+import GetInOut from "./model/StoreInOutModal"
 import StoredeleModal from "./model/StoredeleModal"
 
 const columns = [{
@@ -50,11 +50,9 @@ class MyTable extends Component{
                         新建
                     </Button>
                 </div>
-
                 <AddStoreModal />
                 <GetInOut />
                 <StoredeleModal />
-
             </div>
         )
     }

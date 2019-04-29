@@ -1,13 +1,18 @@
-import React,{Component,Fragment} from 'react'
-import {observer,inject} from 'mobx-react';
+import React,{ Component,Fragment } from 'react'
+import { observer,inject } from 'mobx-react';
 import { Button } from 'antd';
 
+export default
 @inject('StoreOrder')
-@inject('StoreLogin')
 @observer
 class Order extends Component{
+    componentDidMount() {
+        const { StoreOrder } = this.props;
+        StoreOrder.reload();
+    }
+
     render(){
-        const {StoreOrder} = this.props;
+        const { StoreOrder } = this.props;
         return (
             <Fragment>
                 <div className={"header"}>
@@ -19,13 +24,12 @@ class Order extends Component{
                         name=""
                         className="btn btn-success edit_id hello"
                         onClick={()=>StoreOrder.handleLoginOut()}
-                        // htmlType={""}
                     >
                         注销
                     </Button>
                     <span className={"hello"}>
-                    欢迎你：
-                    {StoreOrder.saler}
+                        欢迎你：
+                        {StoreOrder.userMessage.username}
                     </span>
                 </div>
                 {this.props.children}
@@ -33,6 +37,5 @@ class Order extends Component{
         )
     }
 }
-export default Order
 
 

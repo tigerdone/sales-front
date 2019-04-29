@@ -1,12 +1,11 @@
-
 let deepClone=(v)=>{
     return JSON.parse(JSON.stringify(v));
 };
 let judgeDay = (a,b) =>{
-    var abox = a[0].split("-");
-    var abox1 = a[1].split("-");
-    var bbox = b.split("-");
-    for(var i = 0 ; i < 3 ;i++ ){
+    const abox = a[0].split("-");
+    const abox1 = a[1].split("-");
+    const bbox = b.split("-");
+    for(let i = 0 ; i < 3 ;i++ ){
         if(parseInt(abox[i]) <= parseInt(bbox[i]) && parseInt(abox1[i]) >= parseInt(bbox[i])){
             if(parseInt(abox[i])===parseInt(bbox[i])&&parseInt(abox1[i])===parseInt(bbox[i])){
             }
@@ -21,8 +20,6 @@ let judgeDay = (a,b) =>{
     }
     return true;
 };
-// exports.deepClone = deepClone;
-// exports.judgeDay = judgeDay;
 
 export {
     deepClone,

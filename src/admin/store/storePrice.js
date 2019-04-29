@@ -1,6 +1,6 @@
 import {observable,action} from "mobx";
 import axios from "axios"
-import {deepClone} from "../function/method";
+import {deepClone} from "../util/method";
 
 class storeStore {
     constructor(){
@@ -17,7 +17,6 @@ class storeStore {
         price:"",
     };
     pricebox = {};
-
 
     // -------------get-------------//
     @action
@@ -69,6 +68,18 @@ class storeStore {
                 Obj.name = i;
                 Obj.price = data[i];
                 Obj.key = new Date() + Math.random();
+                switch (i) {
+                    case "adultPrice" :Obj.ZHname = "成人票价";
+                        break;
+                    case "childPrice" :Obj.ZHname = "儿童票价";
+                        break;
+                    case "plupPrice" :Obj.ZHname = "浆板价格";
+                        break;
+                    case "clothPrice" :Obj.ZHname = "安全服价格";
+                        break;
+                    default:
+                        break;
+                }
                 box.push(deepClone(Obj));
             }
         }
@@ -81,7 +92,13 @@ class storeStore {
     };
     @action
     setValue=(e)=>{
-        this.InputBox[e.target.name] = e.target.value
+        if(/\D/g.test(e.target.value)){
+            this.message = "请输入纯数字！";
+        }
+        else{
+            this.message = "";
+            this.InputBox[e.target.name] = e.target.value
+        }
     };
     @action
     initInput=()=>{

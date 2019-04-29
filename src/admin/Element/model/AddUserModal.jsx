@@ -17,6 +17,7 @@ class MyTable extends Component{
                 onCancel={() => StoreSet.setUsersModal(false) }
                 okText="确认"
                 cancelText="取消"
+                maskClosable={false}
                 width={400}
             >
                 <div className={"inputBox"}>

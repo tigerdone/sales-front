@@ -1,65 +1,19 @@
-import {action, computed, configure, observable, autorun} from 'mobx'
+import {action, computed, configure, observable} from 'mobx'
 import axios from 'axios' //发送ajax 请求
-import { deepClone } from "../function/method.js"
-import { createTransformer } from 'mobx-utils'
+import { deepClone } from "../util/method.js"
 
-
-
+//----------------严格模式-------------------//
 configure({ enforceActions: "observed" });
 const moment = require('moment');
-// import methods from "../function/method";
 
 class StoreOrder {
     constructor() {
+        this.getSaler();
         this.getOrders("ing");
         this.getPrice();
-        this.getSaler();
-        // this.initTest();
+        this.getUerMessage();
     }
     @observable store = [];
-    @observable states = [];
-
-    @action
-    initTest=()=>{
-        autorun(() => {
-            this.states = (this.serializeState(this.store));
-        });
-    };
-    serializeState = createTransformer(store => store.map(
-        this.serializeBox
-    ));
-
-    serializeBox = createTransformer(item => {
-        // {...box}
-        let getIn = true;
-        if (this.filterStr !== "all" && item.ifFinish !== this.filterStr){
-            getIn = false;
-        }
-        let timebox = this.filterTime.slice();
-        let startTime = moment(timebox[0]).format("YYYY-MM-DD");
-        let endTime = moment(timebox[1]).format("YYYY-MM-DD");
-        if (this.filterTime.length >= 2
-            &&!moment(startTime).isSame(item.time)
-            &&!moment(endTime).isSame(item.time)
-            &&!moment(item.time).isBetween(startTime, endTime)
-        )
-        {
-            getIn = false;
-        }
-        if ( this.filterplat !== "各平台" && item.platform !== this.filterplat) {
-            getIn = false;
-        }
-        if (this.inputSearch !== "" && item.orderNum !== this.inputSearch){
-            if (this.Searching){
-                getIn = false;
-            }
-        }
-        if (getIn) {
-            return item;
-            // newOrder.push(item);
-        }
-    });
-
     @observable orders = [];
     @observable InputBox = {
         _id:"",
@@ -73,7 +27,12 @@ class StoreOrder {
         totalMoney: "",
         isReback: "",
         ifFinish: "",
-        saler:""
+        saler:"",
+        phoneNumber:""
+    };
+    @observable userMessage = {
+        username: '',
+        powerId: '1',
     };
     @observable price = {
         _id:"",
@@ -88,6 +47,7 @@ class StoreOrder {
     @observable modalInputBox = false;
     @observable deleModal = false;
     @observable filterNum = 0;
+    @observable addPhoneMessage = "";
 
     //filter
     @observable filterStr = "all";
@@ -96,10 +56,39 @@ class StoreOrder {
     @observable inputSearch = "";
     @observable Searching = false;
 
-
+    //get
     @computed get ordersLength(){
         return this.orders.length;
     };
+    @computed get fiter(){
+        //完成度筛选
+        return this.orders.filter((item)=>{
+            if (this.filterStr !== "all" && item.ifFinish !== this.filterStr){
+                return false;
+            }
+            let timebox = this.filterTime.slice();
+            let startTime = moment(timebox[0]).format("YYYY-MM-DD");
+            let endTime = moment(timebox[1]).format("YYYY-MM-DD");
+            if (this.filterTime.length >= 2
+                &&!moment(startTime).isSame(item.time)
+                &&!moment(endTime).isSame(item.time)
+                &&!moment(item.time).isBetween(startTime, endTime)
+            )
+            {
+                return false;
+            }
+            if ( this.filterplat !== "各平台" && item.platform !== this.filterplat) {
+                return false;
+            }
+            if (this.inputSearch !== "" && item.orderNum !== this.inputSearch){
+                if (this.Searching){
+                    return false;
+                }
+            }
+            return true;
+        });
+    };
+
     @action
     handleInputBoxInput=(key,value)=>{
         this.InputBox[key]=value;
@@ -120,17 +109,13 @@ class StoreOrder {
             item.key = new Date() + Math.random();
             item.personNum = parseInt(item.childNum) + parseInt(item.adultNum);
             box.push(item);
-            // console.log("sdfsdfsdfsdf");
-            return item.id
+            return item.id;
         });
         this.orders.replace(box);
-
-        this.store = (box);
     };
     @action
     getOrders=(e)=>{
-        this.activeClass = e;
-        let router = '/admin/Data?name=' + e.toLocaleLowerCase();
+        let router = '/admin/Data';
         axios.get(router)
             .then((res)=>{
                 if (res.status === 200){
@@ -149,11 +134,6 @@ class StoreOrder {
         axios.get( '/admin/price')
             .then((res)=>{
                 if (res.status === 200){
-                    // res.data.map((item)=>{
-                    //     console.log(item);
-                    //     this.setPrice(item);
-                    //     return item.id
-                    // })
                     this.setPrice(res.data[0]);
                 }
                 else {
@@ -181,6 +161,7 @@ class StoreOrder {
     @action
     setPrice=(item)=>{
         this.price = item;
+        // console.log(JSON.stringify(this.price));
     };
     @action
     setSaler=(value)=>{
@@ -213,6 +194,7 @@ class StoreOrder {
         this.InputBox.platform = "现场";
         this.InputBox.payWay = "现金";
         this.InputBox.deposite = "现金";
+        this.InputBox.phoneNumber = "";
     };
     @action
     updateInput=(record,tag)=>{
@@ -237,16 +219,44 @@ class StoreOrder {
     writeSearch=(e)=>{
         this.inputSearch = e.target.value;
     };
+    @action
+    setPhoneInput=(e)=>{
+        if(/\D/g.test(e.target.value)){
+            this.addPhoneMessage = "请输入纯数字！";
+        }
+        else{
+            this.addPhoneMessage = "";
+            this.InputBox[e.target.name] = e.target.value;
+        }
+    };
 
+    getInvoice=(record)=>{
+        axios.post("/admin/initWord",record)
+            .then((res)=>{
+                if (res.status === 200){
+                    this.getword();
+                }
+                else {
+                    console.log("error")
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+                alert("提交失败")
+            });
+    };
     //数据交互
+    @action
     inputUpdate=() =>{
         let router;
         if (this.InputBox._id === ""){
-            // console.log(this.InputBox);
             router = '/admin/insertoneOrder';
+            this.InputBox.adultPrice = this.price.adultPrice;
+            this.InputBox.totalLow =
+                Number(this.InputBox.adultNum)*Number(this.price.adultPrice)
+                + Number(this.InputBox.childNum)*Number(this.price.childPrice)
         }
         else{
-            // console.log("this.InputBox");
             router = '/admin/updateoneOrder';
         }
         axios.post(router,this.InputBox)
@@ -254,7 +264,7 @@ class StoreOrder {
                 if (res.status === 200){
                     this.setmodalInputBox(false);
                     alert("提交成功");
-                    this.reLode()
+                    this.reload()
                 }
                 else {
                     console.log("error")
@@ -270,7 +280,8 @@ class StoreOrder {
         axios.post('/admin/deleteOne',this.InputBox)
             .then((res)=>{
                 if (res.status === 200){
-                    alert("删除成功")
+                    alert("删除成功");
+                    this.reload()
                 }
                 else {
                     console.log("error")
@@ -279,7 +290,6 @@ class StoreOrder {
             .catch(function (error) {
                 console.log(error);
             });
-        this.reLode()
     };
     handleLoginOut=()=>{
         axios.get('/admin/LoginOut')
@@ -296,9 +306,10 @@ class StoreOrder {
                 console.log(error);
             });
     };
-    reLode=()=>{
+    reload=()=>{
         let e = "all";
-        this.getOrders(e)
+        this.getOrders(e);
+        this.getPrice()
     };
     getClassName=(e)=>{
         if(this.activeClass === e){
@@ -308,51 +319,53 @@ class StoreOrder {
             return ""
         }
     };
-    fiter=()=>{
-        let newOrder = [];
-        let getIn = true;
-        //完成度筛选
-        this.orders.map((item)=>{
-
-            if (this.filterStr !== "all" && item.ifFinish !== this.filterStr){
-                getIn = false;
+    getUerMessage=()=>{
+        axios.get('/admin/userMessage').then((res)=>{
+            if(res.status === 200){
+                this.setUserMessage(res.data)
             }
-            let timebox = this.filterTime.slice();
-            let startTime = moment(timebox[0]).format("YYYY-MM-DD");
-            let endTime = moment(timebox[1]).format("YYYY-MM-DD");
-            if (this.filterTime.length >= 2
-                &&!moment(startTime).isSame(item.time)
-                &&!moment(endTime).isSame(item.time)
-                &&!moment(item.time).isBetween(startTime, endTime)
-            )
-            {
-                getIn = false;
+            else{
+                console.log("error")
             }
-            if ( this.filterplat !== "各平台" && item.platform !== this.filterplat) {
-                getIn = false;
-            }
-            if (this.inputSearch !== "" && item.orderNum !== this.inputSearch){
-                if (this.Searching){
-                    getIn = false;
-                }
-            }
-            if (getIn) {
-                newOrder.push(item);
-            }
-            getIn = true;
-            return item._id;
+        })
+        .catch( (error)=>{
+            console.log(error);
         });
-        this.setFilter(newOrder.length);
-        return newOrder
+    };
+
+    @action
+    setUserMessage=(data)=>{
+        this.userMessage = deepClone(data)
+    };
+
+    getword=()=>{
+        // this.downloadFile("http://47.107.70.36/word/addblackout.docx");
+        // this.downloadFile("http://127.0.0.1/word/addbuleout.docx");
+        // this.downloadFile("http://47.107.70.36/word/addRedout.docx");
+        // this.downloadFile("http://47.107.70.36/word/addYellowout.docx");
+        window.open("http://127.0.0.1/word/白票out.docx","_self");
+        setTimeout(()=>{
+            window.open("http://127.0.0.1/word/红票out.docx","_self");
+        },500);
+        setTimeout(()=>{
+            window.open("http://127.0.0.1/word/黄票out.docx","_self");
+        },1000);
+    };
+    downloadFile=(url)=>{
+        try{
+            var elemIF = document.createElement("iframe");
+            elemIF.src = url;
+            elemIF.style.display = "none";
+            document.body.appendChild(elemIF);
+        }catch(e){
+            console.log(JSON.stringify(e))
+        }
     };
 
     // fiter方法
     @action
     setFilishFilter=(key)=>{
         this.filterStr = key;
-        autorun(() => {
-            this.states = (this.serializeState(this.store));
-        });
     };
     @action
     setTimefilter=(dates)=>{
@@ -374,5 +387,7 @@ class StoreOrder {
         this.filterplat = "各平台";
         this.inputSearch = "";
     };
+
+
 }
 export default new StoreOrder();

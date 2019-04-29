@@ -1,6 +1,6 @@
 import { observable,action } from "mobx";
 import axios from 'axios';
-import {deepClone} from "../function/method";
+import {deepClone} from "../util/method";
 
 class StoreLogin {
     constructor(){
@@ -11,7 +11,8 @@ class StoreLogin {
         _id:"",
         username:"",
         password:"",
-        orders:""
+        orders:"",
+        powerId: ""
     };
 
     @observable usersModal = false;
@@ -21,6 +22,7 @@ class StoreLogin {
     @action
     addUser=()=>{
         let router;
+        this.userBox.powerId = "1";
         if (this.userBox._id === ""){
             router = '/admin/insertuser';
         }
@@ -77,7 +79,7 @@ class StoreLogin {
             });
     };
     @action
-    setUsers=(data)=>{
+    setUsers=(data=[])=>{
         let box = [];
         data.map((item)=>{
             item.key = new Date() + Math.random();
@@ -98,6 +100,7 @@ class StoreLogin {
         this.userBox.username= "";
         this.userBox.password= "";
         this.userBox.orders= 0;
+        this.userBox.powerId= 1;
         this.usersMessage = "";
     };
     @action
@@ -137,7 +140,11 @@ class StoreLogin {
                 console.log(error);
                 alert("提交失败")
             });
-    }
+    };
+
+    setFilish=()=>{
+        window.location.hash = "#/order";
+    };
 }
 export default new StoreLogin();
 

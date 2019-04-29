@@ -12,6 +12,7 @@ class OrderLine extends Component {
             <div>
                 <Button
                     type="primary"
+                    disabled = {record.ifFinish==="ing"?(false):(true)}
                     onClick={() => StoreOrder.updateInput(record,"repaire")}
                 >
                     修改
@@ -19,6 +20,13 @@ class OrderLine extends Component {
                 <Divider type="vertical" />
                 <Button
                     type="primary"
+                    onClick={() => StoreOrder.getInvoice(record)}
+                >
+                    发票
+                </Button>
+                <Divider type="vertical" />
+                <Button
+                    type="danger"
                     onClick={() => StoreOrder.updateInput(record,"delete")}
                 >
                     删除

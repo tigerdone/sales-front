@@ -16,7 +16,7 @@ class MyTable extends Component{
                 visible={StoreStore.modalInputBox}
                 onOk={StoreStore.inputUpdate}
                 onCancel={() => StoreStore.setmodalInputBox(false)}
-                // align={""}
+                maskClosable={false}
                 width = {400}
                 className={"myModal1"}
             >

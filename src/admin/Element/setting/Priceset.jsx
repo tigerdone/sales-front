@@ -6,8 +6,8 @@ import PriceModal from "../model/PriceModal/PriceModal"
 
 const columns = [{
     title: '物品',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'ZHname',
+    key: 'ZHname',
 },{
     title: '价格',
     dataIndex: 'price',

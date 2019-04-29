@@ -9,13 +9,45 @@ class StoreLogin {
     @observable loginInputBox = {
         inputName: '',
         inputPassword: '',
-        power_id: '管理员',
+        powerId: '1',
     };
 
     @observable message;
-    @observable saler = "sadasdasdasd";
-    @observable isLoading;
+    @observable isLoading = false;
 
+    // ----------------数据库操作------------------//
+    @action
+    handleLogin=()=>{
+        this.setIsLoading(true);
+        axios.post('/admin/login',this.loginInputBox)
+            .then((res)=>{
+                this.setIsLoading(false);
+                if (res.data.isLogined === true){
+                    this.setId(this.loginInputBox.powerId);
+                    window.location.hash = "#/order";
+                }
+                else if (res.data.isLogined === false){
+                    this.setMessage("密码错误或无此用户");
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+    isAdmin = (nextState, replaceState, cd) =>{
+        axios.get('/admin/checkLogin')
+            .then((res)=>{
+                if (!res.data.isLogined){
+                    replaceState({ pathname: '/login' });
+                    cd();
+                }
+                else{
+                    cd();
+                }
+            })
+    };
+
+    // ----------------set------------------//
     @action
     loginInputBoxInput=(key,value)=>{
         this.loginInputBox[key]=value;
@@ -25,31 +57,9 @@ class StoreLogin {
         this.isLoading=value;
     };
     @action
-    setSaler=(value)=>{
-        this.saler=value;
+    setId = (value) => {
+        this.powerId = value;
     };
-    @action
-    handleLogin=()=>{
-        // console.log(this.loginInputBox.inputName, '提交数据');
-        this.setIsLoading(true);
-        axios.post('/admin/login',this.loginInputBox)
-            .then((res)=>{
-                if (res.data.isLogined === true){
-                    this.setIsLoading(true);
-                    this.setSaler(this.loginInputBox.inputName);
-                    window.location.hash = "#/order";
-                }
-                else if (res.data.isLogined === false){
-                    // console.log("error");
-                    this.setMessage("密码错误");
-                    this.setIsloading(false);
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-
     @action
     setIsloading = (value) => {
         this.isLoading = value;
@@ -58,20 +68,11 @@ class StoreLogin {
     setMessage = (value) => {
         this.message = value;
     };
-
-
-    isAdmin = (nextState, replaceState,cd) =>{
-        axios.get('/admin/checkLogin')
-            .then((res)=>{
-                console.log("res.data.isLogined:"+res.data.isLogined);
-                if (!res.data.isLogined){
-                    replaceState({ pathname: '/login' });
-                    cd();
-                }
-                else{
-                    cd();
-                }
-            })
+    @action
+    initStore=()=>{
+        this.loginInputBox.inputName = '';
+        this.loginInputBox.inputPassword = '';
+        this.loginInputBox.powerId = '1';
     };
 }
 export default new StoreLogin();

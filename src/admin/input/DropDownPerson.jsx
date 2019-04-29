@@ -39,7 +39,7 @@ class DropDown extends Component{
                     <span>
                         {
                             (personType === "成人")?
-                                (StoreOrder.price.adultPrice):(StoreOrder.price.adultPrice)
+                                (StoreOrder.price.adultPrice):(StoreOrder.price.childPrice)
                         }
                         元/人
                     </span>

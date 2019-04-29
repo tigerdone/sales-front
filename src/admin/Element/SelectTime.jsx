@@ -1,5 +1,4 @@
 import { DatePicker } from 'antd';
-// import moment from 'moment';
 import  React,{Component} from "react"
 import {inject, observer} from "mobx-react";
 const { RangePicker } = DatePicker;
@@ -14,7 +13,6 @@ class SelectTime extends Component {
         return (
             <RangePicker
                 onChange = {StoreOrder.setTimefilter}
-                // defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
                 format={dateFormat}
                 value={StoreOrder.filterTime.slice()}
                 placeholder = {["开始时间","结束时间"]}

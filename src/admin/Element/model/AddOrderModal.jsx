@@ -1,6 +1,6 @@
 import {inject, observer} from "mobx-react";
 import React,{ Component } from "react"
-import { Modal,Checkbox } from "antd";
+import { Modal,Checkbox,Input } from "antd";
 import DropDownPlat from '../../input/DropDownPlat'
 import DropDownPay from '../../input/DropDownPay'
 import DropDownPerson from '../../input/DropDownPerson'
@@ -19,8 +19,8 @@ class MyTable extends Component{
                 visible={StoreOrder.modalInputBox}
                 onOk={StoreOrder.inputUpdate}
                 onCancel={() => StoreOrder.setmodalInputBox(false)}
-                // align={""}
                 width = {400}
+                maskClosable={false}
                 className={"myModal1"}
             >
                     <div>
@@ -61,6 +61,18 @@ class MyTable extends Component{
                         </span>
                     </div>
                     <div className={"OrderItem"}>
+                            <span>
+                                联系方式：
+                            </span>
+                        <span>
+                            <Input
+                                value={StoreOrder.InputBox.phoneNumber}
+                                onChange={(e)=>StoreOrder.setPhoneInput(e)}
+                                 name={"phoneNumber"}
+                            />
+                        </span>
+                    </div>
+                    <div className={"OrderItem"}>
                         <span>
                             总价：
                         </span>
@@ -71,6 +83,7 @@ class MyTable extends Component{
                             元
                         </span>
                     </div>
+
                     <div className={"OrderItem"}>
                         <span>
                             已完成：
@@ -83,6 +96,9 @@ class MyTable extends Component{
                         >
                         </Checkbox>
                     </div>
+                <div className={"newUserMessage"}>
+                    {StoreOrder.addPhoneMessage}
+                </div>
             </Modal>
         )
     }

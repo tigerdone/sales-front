@@ -19,19 +19,16 @@ class MyTable extends Component{
                 onCancel={() => StoreStore.setModalInOut(false)}
                 width = {400}
                 className={"myModal1"}
+                maskClosable={false}
             >
                 <div>
                     <div className={"storeModalInput"}>
                          <span>
                             品名：
                         </span>
-                        <Input
-                            name={"name"}
-                            onChange={(e)=>StoreStore.setValue(e)}
-                            value={StoreStore.InputBox.name}
-                            size={"default"}
-                            style={{ width: '150px' }}
-                        />
+                        <span>
+                            {StoreStore.InputBox.name}
+                        </span>
                     </div>
                     <div className={"storeModalInput"}>
                         <span>

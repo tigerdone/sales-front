@@ -1,7 +1,6 @@
 import {observable,action} from "mobx";
-
 import axios from "axios"
-import {deepClone} from "../function/method";
+import {deepClone} from "../util/method";
 
 class storeStore {
     constructor(){
@@ -21,7 +20,6 @@ class storeStore {
     };
     @observable InputBoxing = "";
 
-
     // -------------get-------------//
     @action
     getStore=()=>{
@@ -33,9 +31,10 @@ class storeStore {
                 console.log("error");
             }
         })
-        // .catch( (error)=>{
-        //     console.log(error);
-        // })
+        .catch(function (error) {
+            console.log(error);
+            alert("提交失败")
+        });
     };
     @action
     inputUpdate=() =>{
@@ -99,11 +98,6 @@ class storeStore {
             return item.id
         });
         this.data = box;
-        this.data.replace(box);
-    };
-    @action
-    newStorething=()=>{
-
     };
     @action
     setmodalInputBox=(value)=>{
@@ -113,11 +107,7 @@ class storeStore {
     @action
     setValue=(e)=>{
         if (e.target.name === "total") {
-            let box = e.target.value;
-            // if (box[0] === "-"){
-            //     box = box.slice(1,box.length-1)
-            // }
-            if(/\D/g.test(box)){
+            if(/\D/g.test(e.target.value)){
                 this.setMessage("请输入纯数字！");
                 return;
             }
@@ -142,7 +132,6 @@ class storeStore {
     setmodalInOut=(value)=>{
         this.modalInOut = value;
     };
-
     @action
     updateInput=(record,message)=>{
         this.InputBox =  deepClone(record);
