@@ -1,6 +1,7 @@
 import  React,{Component} from "react"
 import Userset from "./Userset"
 import Priceset from "./Priceset"
+import SmallShop from "../SmallShop"
 
 
 export default
@@ -10,6 +11,7 @@ class MyTable extends Component{
             <div>
                 <Userset />
                 <Priceset />
+                <SmallShop />
             </div>
         )
     }

@@ -64,6 +64,7 @@ class MyTable extends Component{
         const {StoreOrder} = this.props;
         StoreOrder.getOrders();
     }
+
     render() {
         const {StoreOrder} = this.props;
         return (
@@ -94,10 +95,10 @@ class MyTable extends Component{
                     </div>
                 </div>
                 <Tabs className={"tags"} onChange={StoreOrder.setFilishFilter} type={"card"}>
-                    <TabPane tab="所有" key="all">
-                    </TabPane>
-                    <TabPane tab="待完成" key="ing">
-                    </TabPane>
+                    {/*<TabPane tab="所有" key="all">*/}
+                    {/*</TabPane>*/}
+                    {/*<TabPane tab="待完成" key="ing">*/}
+                    {/*</TabPane>*/}
                     <TabPane tab="已完成" key="ed">
                     </TabPane>
                 </Tabs>
@@ -114,12 +115,18 @@ class MyTable extends Component{
                 <div className={"newOrder"}>
                     <div className={"total"}>
                         共
-                        {StoreOrder.fiter.length}
+                        { StoreOrder.fiter.length }
                         条记录
+                    </div>
+
+                    <div className={"total"}>
+                        ，共
+                        { StoreOrder.perserTotall }
+                        人
                     </div>
                     <Button
                         type="primary"
-                        onClick={StoreOrder.setInitFilter}
+                        onClick={ StoreOrder.setInitFilter }
                     >
                         默认
                     </Button>

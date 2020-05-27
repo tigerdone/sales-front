@@ -1,6 +1,6 @@
 import {inject, observer} from "mobx-react";
 import React,{ Component } from "react"
-import { Modal,Checkbox,Input } from "antd";
+import { Modal, Input } from "antd";
 import DropDownPlat from '../../input/DropDownPlat'
 import DropDownPay from '../../input/DropDownPay'
 import DropDownPerson from '../../input/DropDownPerson'
@@ -29,9 +29,9 @@ class MyTable extends Component{
                     <div>
                         <DropDownPay payType = {"payWay"} />
                     </div>
-                    <div>
-                        <DropDownPay payType = {"deposite"} />
-                    </div>
+                    {/*<div>*/}
+                        {/*<DropDownPay payType = {"depositePayWay"} />*/}
+                    {/*</div>*/}
                     <div>
                         <DropDownPerson personType = {"成人"} />
                     </div>
@@ -40,24 +40,10 @@ class MyTable extends Component{
                     </div>
                     <div className={"OrderItem"}>
                         <span>
-                            安全服：
+                            押金：
                         </span>
                         <span>
-                            { Number(StoreOrder.InputBox.adultNum) + Number(StoreOrder.InputBox.childNum) }
-                            *
-                            { StoreOrder.price.clothPrice }
-                            元/人
-                        </span>
-                    </div>
-                    <div className={"OrderItem"}>
-                        <span>
-                            浆板：
-                        </span>
-                        <span>
-                            {StoreOrder.InputBox.adultNum}
-                            *
-                            {StoreOrder.price.plupPrice}
-                            元/人
+                            100元
                         </span>
                     </div>
                     <div className={"OrderItem"}>
@@ -68,7 +54,7 @@ class MyTable extends Component{
                             <Input
                                 value={StoreOrder.InputBox.phoneNumber}
                                 onChange={(e)=>StoreOrder.setPhoneInput(e)}
-                                 name={"phoneNumber"}
+                                name={"phoneNumber"}
                             />
                         </span>
                     </div>
@@ -78,27 +64,27 @@ class MyTable extends Component{
                         </span>
                         <span>
                             {
-                                StoreOrder.InputBox.totalMoney
+                                StoreOrder.InputBox.platform !== "现场"?
+                                StoreOrder.InputBox.deposite:StoreOrder.InputBox.totalMoney
                             }
                             元
                         </span>
                     </div>
-
-                    <div className={"OrderItem"}>
-                        <span>
-                            已完成：
-                        </span>
-                        <Checkbox
-                            onChange={(value) =>StoreOrder.setIsReback(value)}
-                            checked={
-                                StoreOrder.InputBox.isReback === "true"
-                            }
-                        >
-                        </Checkbox>
+                    {/*<div className={"OrderItem"}>*/}
+                        {/*<span>*/}
+                            {/*已完成：*/}
+                        {/*</span>*/}
+                        {/*<Checkbox*/}
+                            {/*onChange={(value) =>StoreOrder.setIsReback(value)}*/}
+                            {/*checked={*/}
+                                {/*StoreOrder.InputBox.isReback === "true"*/}
+                            {/*}*/}
+                        {/*>*/}
+                        {/*</Checkbox>*/}
+                    {/*</div>*/}
+                    <div className={"newUserMessage"}>
+                        { StoreOrder.addPhoneMessage }
                     </div>
-                <div className={"newUserMessage"}>
-                    {StoreOrder.addPhoneMessage}
-                </div>
             </Modal>
         )
     }

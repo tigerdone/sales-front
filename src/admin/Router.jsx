@@ -1,7 +1,7 @@
 import React,{ Component } from 'react'
 import Login from './login/Login'
 import Order from './sale/Order'
-import IndexBox from './Element/IndexBox'
+import Table from './Element/Table'
 import Setting from './Element/setting/Setting'
 import { Router , Route, hashHistory,IndexRoute } from 'react-router';
 import { inject, observer } from "mobx-react";
@@ -17,7 +17,7 @@ class index extends Component{
                 <Route path='/' component={Login}/>
                 <Route path='/login' component={Login}/>
                 <Route path='/order' component={Order} onEnter={StoreLogin.isAdmin}>
-                    <IndexRoute component={IndexBox} />
+                    <IndexRoute component={Table} />
                     <Route path='setting' component={Setting}/>
                 </Route>
             </Router>
