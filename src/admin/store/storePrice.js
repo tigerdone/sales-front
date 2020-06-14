@@ -45,13 +45,9 @@ class storeStore {
             .then((res)=>{
                 if (res.status === 200){
                     this.setmodalInputBox(false);
-<<<<<<< HEAD
-//                    alert("提交成功");
-=======
 
                     alert("提交成功");
 
->>>>>>> be4e21ee8f7c8bb5ef7de429f0264771498da913
                     this.reLode()
                 }
                 else {
