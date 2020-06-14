@@ -1,5 +1,6 @@
 import {action, computed, configure, observable} from 'mobx'
 import axios from 'axios' //发送ajax 请求
+import { message } from 'antd';
 import { deepClone } from "../util/method.js"
 
 //----------------严格模式-------------------//
@@ -9,9 +10,9 @@ const moment = require('moment');
 class StoreOrder {
     constructor() {
         this.getSaler();
-        this.getOrders("ing");
+        this.getOrders();
         this.getPrice();
-        // this.getUerMessage();
+        this.initInput();
     }
     @observable store = [];
     @observable orders = [];
@@ -21,7 +22,7 @@ class StoreOrder {
         orderNum: "",
         platform: "",
         payWay: "",//票价
-        deposite: "",//押金
+        depositePayWay: "",//押金
         adultNum: "",
         childNum: "",
         totalMoney: "",
@@ -61,11 +62,10 @@ class StoreOrder {
         return this.orders.length;
     };
     @computed get fiter(){
-        //完成度筛选
         return this.orders.filter((item)=>{
-            if (this.filterStr !== "all" && item.ifFinish !== this.filterStr){
-                return false;
-            }
+            // if (this.filterStr !== "all" && item.ifFinish !== this.filterStr){
+            //     return false;
+            // }
             let timebox = this.filterTime.slice();
             let startTime = moment(timebox[0]).format("YYYY-MM-DD");
             let endTime = moment(timebox[1]).format("YYYY-MM-DD");
@@ -78,6 +78,16 @@ class StoreOrder {
                 return false;
             }
             if ( this.filterplat !== "各平台" && item.platform !== this.filterplat) {
+                if (this.filterplat === "其他"){
+                    if  (item.platform !== "现场"
+                        && item.platform !== "美团"
+                        && item.platform !== "红苹果"
+                        && item.platform !== "驴妈妈"
+                        && item.platform !== "云客赞"
+                    ){
+                        return true;
+                    }
+                }
                 return false;
             }
             if (this.inputSearch !== "" && item.orderNum !== this.inputSearch){
@@ -88,6 +98,14 @@ class StoreOrder {
             return true;
         });
     };
+    @computed get perserTotall(){
+        let box = 0;
+        for (let i = 0 ;i < this.fiter.length ;i++){
+            box += this.fiter[i].childNum?this.fiter[i].childNum:0;
+            box += this.fiter[i].adultNum?this.fiter[i].adultNum:0;
+        }
+        return box
+    }
 
     @action
     handleInputBoxInput=(key,value)=>{
@@ -95,8 +113,7 @@ class StoreOrder {
         this.InputBox.totalMoney =
         Number(this.InputBox.adultNum)*Number(this.price.adultPrice)
         + Number(this.InputBox.childNum)*Number(this.price.childPrice)
-        + (Number(this.InputBox.adultNum)+Number(this.InputBox.childNum))*Number(this.price.clothPrice)
-        + Number(this.InputBox.adultNum)*Number(this.price.plupPrice)
+        + this.InputBox.deposite
     };
     @action
     addOneOrders=(item)=>{
@@ -113,6 +130,7 @@ class StoreOrder {
         });
         this.orders.replace(box);
     };
+
     @action
     getOrders=(e)=>{
         let router = '/admin/Data';
@@ -192,8 +210,12 @@ class StoreOrder {
         this.InputBox.saler = this.saler;
         this.InputBox.platform = "现场";
         this.InputBox.payWay = "现金";
-        this.InputBox.deposite = "现金";
+        this.InputBox.depositePayWay = "现金";
         this.InputBox.phoneNumber = "";
+        this.InputBox.deposite = 100;
+        this.InputBox.totalMoney = 100;
+        this.InputBox.time = moment(Date.now()).format("YYYY-MM-DD");
+        this.InputBox.isReback = "true";
     };
     @action
     updateInput=(record,tag)=>{
@@ -233,6 +255,7 @@ class StoreOrder {
         axios.post("/admin/initPdf",record)
             .then((res)=>{
                 if (res.status === 200){
+                    // window.open("http://47.107.70.36/pdf/pdf"+this.userMessage.username+".pdf","_blank");
                     window.open("http://127.0.0.1/pdf/pdf"+this.userMessage.username+".pdf","_blank");
                     console.log("ok");
                 }
@@ -251,19 +274,25 @@ class StoreOrder {
         let router;
         if (this.InputBox._id === ""){
             router = '/admin/insertoneOrder';
-            this.InputBox.adultPrice = this.price.adultPrice;
-            this.InputBox.totalLow =
-                Number(this.InputBox.adultNum)*Number(this.price.adultPrice)
-                + Number(this.InputBox.childNum)*Number(this.price.childPrice)
+
+            // 打印
+            if (window.myPreview1) {
+                window.myPreview1()
+            }
         }
         else{
             router = '/admin/updateoneOrder';
         }
-        axios.post(router,this.InputBox)
+        console.log(this.InputBox);
+        axios.post(router, this.InputBox)
             .then((res)=>{
                 if (res.status === 200){
                     this.setmodalInputBox(false);
+<<<<<<< HEAD
 //                    alert("提交成功");
+=======
+                    message.success('提交成功');
+>>>>>>> be4e21ee8f7c8bb5ef7de429f0264771498da913
                     this.reload()
                 }
                 else {
@@ -280,7 +309,7 @@ class StoreOrder {
         axios.post('/admin/deleteOne',this.InputBox)
             .then((res)=>{
                 if (res.status === 200){
-                    alert("删除成功");
+                    message.success('删除成功');
                     this.reload()
                 }
                 else {
@@ -388,7 +417,5 @@ class StoreOrder {
         this.filterplat = "各平台";
         this.inputSearch = "";
     };
-
-
 }
 export default new StoreOrder();

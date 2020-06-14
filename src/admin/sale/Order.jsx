@@ -1,6 +1,7 @@
 import React,{ Component,Fragment } from 'react'
 import { observer,inject } from 'mobx-react';
 import { Button } from 'antd';
+import Printer from "../Element/printer/Printer"
 
 export default
 @inject('StoreOrder')
@@ -33,6 +34,8 @@ class Order extends Component{
                     </span>
                 </div>
                 {this.props.children}
+
+                <Printer />
             </Fragment>
         )
     }

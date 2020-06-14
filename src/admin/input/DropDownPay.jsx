@@ -15,7 +15,7 @@ class DropDown extends Component{
                 </span>
                 <select
                     value = {
-                        payType === "payWay"?(StoreOrder.InputBox.payWay):(StoreOrder.InputBox.deposite)
+                        payType === "payWay"?(StoreOrder.InputBox.payWay):(StoreOrder.InputBox.depositePayWay)
                         // "微信"
                     }
                     onChange={(e)=>StoreOrder.handleInputBoxInput(payType,e.target.value)}

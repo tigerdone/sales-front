@@ -7,6 +7,7 @@
     "antd": "^3.13.6",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.11.0",
+    "escpos": "^2.4.11",
     "hermes-react": "^1.8.1",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
