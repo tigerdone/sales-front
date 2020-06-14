@@ -160,7 +160,7 @@ class StoreOrder {
     };
     @action
     setPrice=(item)=>{
-        this.price = item;
+        this.Price = item ? item : this.Price;
     };
     @action
     setSaler=(value)=>{
@@ -263,7 +263,7 @@ class StoreOrder {
             .then((res)=>{
                 if (res.status === 200){
                     this.setmodalInputBox(false);
-                    alert("提交成功");
+//                    alert("提交成功");
                     this.reload()
                 }
                 else {

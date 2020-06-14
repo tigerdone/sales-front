@@ -56,7 +56,7 @@ class storeStore {
                     else{
                         this.setmodalInputBox(false);
                         this.setModalInOut(false);
-                        alert("提交成功");
+    //                    alert("提交成功");
                         this.reLode()
                     }
                 }
@@ -76,7 +76,7 @@ class storeStore {
             .then((res)=>{
                 if (res.status === 200){
                     this.setDeleModal(false);
-                    alert("提交成功");
+//                    alert("提交成功");
                     this.reLode()
                 }
                 else {

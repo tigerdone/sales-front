@@ -37,7 +37,7 @@ class StoreLogin {
                     }
                     else{
                         this.setUsersModal(false);
-                        alert("提交成功");
+    //                    alert("提交成功");
                         this.getUsers()
                     }
                 }
@@ -129,7 +129,7 @@ class StoreLogin {
             .then((res)=>{
                 if (res.status === 200){
                     this.setDeleModal(false);
-                    alert("提交成功");
+//                    alert("提交成功");
                     this.getUsers()
                 }
                 else {
