@@ -122,6 +122,12 @@ class MyTable extends Component{
                     <div className={"total"}>
                         ，共
                         { StoreOrder.perserTotall }
+                        人，
+                        成人
+                        { StoreOrder.perserTotallAdult }
+                        人，
+                        儿童
+                        { StoreOrder.perserTotallChildren }
                         人
                     </div>
                     <Button

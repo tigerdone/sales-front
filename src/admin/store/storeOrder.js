@@ -106,6 +106,20 @@ class StoreOrder {
         }
         return box
     }
+    @computed get perserTotallAdult(){
+        let box = 0;
+        for (let i = 0 ;i < this.fiter.length ;i++){
+            box += this.fiter[i].adultNum?this.fiter[i].adultNum:0;
+        }
+        return box
+    }
+    @computed get perserTotallChildren(){
+        let box = 0;
+        for (let i = 0 ;i < this.fiter.length ;i++){
+            box += this.fiter[i].childNum?this.fiter[i].childNum:0;
+        }
+        return box
+    }
 
     @action
     handleInputBoxInput=(key,value)=>{
