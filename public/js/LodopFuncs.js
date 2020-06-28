@@ -142,6 +142,9 @@ function getLodop(oOBJECT, oEMBED) {
 //myadd
 function myPreview1(){
     var LODOP=getLodop();
+    if (!LODOP || !LODOP.SET_PRINT_PAGESIZE) {
+        return
+    }
     LODOP.SET_PRINT_PAGESIZE(3,"210mm","15mm","");
     var allstyle = `
                     table {
