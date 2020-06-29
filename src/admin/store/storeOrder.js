@@ -288,9 +288,8 @@ class StoreOrder {
         let router;
         if (this.InputBox._id === ""){
             router = '/admin/insertoneOrder';
-
             // 打印
-            if (window.myPreview1) {
+            if (window.myPreview1 && process.env.NODE_ENV !== "development") {
                 window.myPreview1()
             }
         }
@@ -302,15 +301,14 @@ class StoreOrder {
                 if (res.status === 200){
                     this.setmodalInputBox(false);
                     message.success('提交成功');
-                    // this.reload()
+                    this.reload()
                     // console.log();
                     // console.log();
-                    var box = this.orders.slice()
-                    box.splice(0, 0, this.InputBox)
-                    this.setOrders(box)
-                    console.log(this.orders)
-                    this.getPrice();
-                    this.getUerMessage()
+                    // var box = this.orders.slice()
+                    // box.splice(0, 0, this.InputBox)
+                    // this.setOrders(box)
+                    // this.getPrice();
+                    // this.getUerMessage()
                 }
                 else {
                     console.log("error")
