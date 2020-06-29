@@ -301,14 +301,13 @@ class StoreOrder {
                 if (res.status === 200){
                     this.setmodalInputBox(false);
                     message.success('提交成功');
-                    this.reload()
-                    // console.log();
-                    // console.log();
-                    // var box = this.orders.slice()
-                    // box.splice(0, 0, this.InputBox)
-                    // this.setOrders(box)
-                    // this.getPrice();
-                    // this.getUerMessage()
+                    // this.reload()
+                    // console.log(res)
+                    var box = this.orders.slice()
+                    box.splice(0, 0, res.data.result)
+                    this.setOrders(box)
+                    this.getPrice();
+                    this.getUerMessage()
                 }
                 else {
                     console.log("error")
