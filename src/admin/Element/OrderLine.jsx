@@ -7,7 +7,6 @@ export default
 @observer
 class OrderLine extends Component {
     render() {
-        const {StoreOrder,record} = this.props;
         return (
             <div>
                 {/*<Button*/}
@@ -29,12 +28,20 @@ class OrderLine extends Component {
                 {/*<Divider type="vertical" />*/}
                 <Button
                     type="danger"
-                    onClick={() => StoreOrder.updateInput(record,"delete")}
+                    onClick={this.handleDele}
                 >
                     删除
                 </Button>
             </div>
         );
+    }
+    handleDele = () => {
+        const {StoreOrder,record} = this.props;
+        if (StoreOrder.userMessage.username === 'supermanage') {
+            StoreOrder.updateInput(record,"delete")
+        } else {
+            alert('没有权限')
+        }
     }
 }
 

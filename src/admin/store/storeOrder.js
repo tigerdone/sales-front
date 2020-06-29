@@ -192,7 +192,7 @@ class StoreOrder {
     };
     @action
     setPrice=(item)=>{
-        this.Price = item ? item : this.Price;
+        this.price = item ? item : this.Price;
     };
     @action
     setSaler=(value)=>{
@@ -297,13 +297,20 @@ class StoreOrder {
         else{
             router = '/admin/updateoneOrder';
         }
-        console.log(this.InputBox);
         axios.post(router, this.InputBox)
             .then((res)=>{
                 if (res.status === 200){
                     this.setmodalInputBox(false);
                     message.success('提交成功');
-                    this.reload()
+                    // this.reload()
+                    // console.log();
+                    // console.log();
+                    var box = this.orders.slice()
+                    box.splice(0, 0, this.InputBox)
+                    this.setOrders(box)
+                    console.log(this.orders)
+                    this.getPrice();
+                    this.getUerMessage()
                 }
                 else {
                     console.log("error")

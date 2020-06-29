@@ -128,7 +128,7 @@ class MyTable extends Component{
                         人，
                         儿童
                         { StoreOrder.perserTotallChildren }
-                        人
+                        人。
                     </div>
                     <Button
                         type="primary"
