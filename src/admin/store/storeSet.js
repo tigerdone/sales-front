@@ -22,13 +22,14 @@ class StoreLogin {
     @action
     addUser=()=>{
         let router;
-        this.userBox.powerId = "1";
         if (this.userBox._id === ""){
+            this.userBox.powerId = "1";
             router = '/admin/insertuser';
         }
         else{
             router = '/admin/updateuser';
         }
+        console.log(router,this.userBox)
         axios.post(router,this.userBox)
             .then((res)=>{
                 if (res.status === 200){
@@ -106,6 +107,7 @@ class StoreLogin {
     @action
     updateInput=(record,tag)=>{
         this.initInput();
+        console.log(record)
         this.userBox =  deepClone(record);
         if (tag === "repaire") {
             this.usersModal = true;

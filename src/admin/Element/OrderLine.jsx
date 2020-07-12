@@ -37,7 +37,7 @@ class OrderLine extends Component {
     }
     handleDele = () => {
         const {StoreOrder,record} = this.props;
-        if (StoreOrder.userMessage.username === 'supermanage') {
+        if (StoreOrder.userMessage.powerId === '2') {
             StoreOrder.updateInput(record,"delete")
         } else {
             alert('没有权限')
