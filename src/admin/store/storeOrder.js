@@ -25,6 +25,7 @@ class StoreOrder {
         depositePayWay: "",//押金
         adultNum: "",
         childNum: "",
+        accidentNum: "",
         totalMoney: "",
         isReback: "",
         ifFinish: "",
@@ -126,6 +127,7 @@ class StoreOrder {
         this.InputBox[key]=value;
         this.InputBox.totalMoney =
         Number(this.InputBox.adultNum)*Number(this.price.adultPrice)
+        + Number(this.InputBox.accidentNum)*Number(7)
         + Number(this.InputBox.childNum)*Number(this.price.childPrice)
         + this.InputBox.deposite
     };

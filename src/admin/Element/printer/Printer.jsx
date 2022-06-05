@@ -14,7 +14,8 @@ class Printer extends Component{
         Message.adultPrice = StoreOrder.price.adultPrice;
         Message.totalLow =
             Number(StoreOrder.InputBox.adultNum)*Number(StoreOrder.price.adultPrice)
-            + Number(StoreOrder.InputBox.childNum)*Number(StoreOrder.price.childPrice);
+            + Number(StoreOrder.InputBox.childNum)*Number(StoreOrder.price.childPrice)
+            + Number(StoreOrder.InputBox.accidentNum)*Number(7);
         // 打印输出
         try {
             Message.time = Message.time.split("-");
@@ -26,11 +27,12 @@ class Printer extends Component{
         let inputMessage = {
             time: Message.time[0]+"年"+Message.time[1]+"月"+Message.time[2]+"日",
             adultPrice:Message.adultPrice,
-            personAll:parseInt(Message.adultNum)+parseInt(Message.childNum),
+            personAll:Number(Message.adultNum)+Number(Message.childNum),
             totalLow:Message.totalLow,
             childNum:Message.childNum,
             adultNum:Message.adultNum,
-            cloth:parseInt(Message.adultNum)+parseInt(Message.childNum),
+            accidentNum: Message.accidentNum,
+            cloth:Number(Message.adultNum)+Number(Message.childNum),
             plup:Message.adultNum,
             totalUp:Message.totalMoney,
             phone:Message.phoneNumber,
@@ -174,12 +176,22 @@ class Printer extends Component{
                         <td>
                             合计大写：
                         </td>
-                        <td colSpan="5" style={{textAlign: "left",}}>
+                        <td colSpan="2" style={{textAlign: "left",}}>
                             <span>
                                 {
                                     Message.platform !== "现场"?
                                         Message.deposite:inputMessage.totalUp
                                 }
+                            </span>
+                        </td>
+                        <td style={{textAlign: "left",}}>
+                            <span>
+                                人身意外保险
+                            </span>
+                        </td>
+                        <td colSpan="2" style={{textAlign: "left",}}>
+                            <span>
+                            {Message.accidentNum}
                             </span>
                         </td>
                     </tr>

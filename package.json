@@ -43,5 +43,5 @@
     "customize-cra": "^0.2.11",
     "jquery": "^3.3.1"
   },
-  "proxy": "http://localhost:7003"
+  "proxy": "http://120.78.205.46:7003"
 }

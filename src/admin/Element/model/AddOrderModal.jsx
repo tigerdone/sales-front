@@ -38,6 +38,9 @@ class MyTable extends Component{
                     <div>
                         <DropDownPerson personType = {"儿童"} />
                     </div>
+                    <div>
+                        <DropDownPerson personType = {"人身意外"} />
+                    </div>
                     <div className={"OrderItem"}>
                         <span>
                             押金：

@@ -12,8 +12,11 @@ class DropDown extends Component{
         if(personType === "成人"){
             person = "adultNum";
         }
-        else{
+        if(personType === "儿童"){
             person = "childNum";
+        }
+        if(personType === "人身意外"){
+            person = "accidentNum";
         }
         return (
             <label className={"OrderItem"}>
@@ -25,14 +28,14 @@ class DropDown extends Component{
                         min={0}
                         value=
                             {
-                                (personType === "成人")?
+                                (personType === "人身意外") ? (StoreOrder.InputBox.accidentNum) : (personType === "成人")?
                                     (StoreOrder.InputBox.adultNum):(StoreOrder.InputBox.childNum)
                             }
                         onChange={(value)=>StoreOrder.handleInputBoxInput(person,value)}
                     />
                     <span>
                         {
-                            (personType === "成人")?
+                            (personType === "人身意外") ? 7 : (personType === "成人")?
                                 (StoreOrder.price.adultPrice):(StoreOrder.price.childPrice)
                         }
                         元/人
