@@ -298,7 +298,23 @@ class StoreOrder {
         else{
             router = '/admin/updateoneOrder';
         }
-        axios.post(router, this.InputBox)
+        axios.post(router, { 
+            accidentNum: this.InputBox.accidentNum,
+            adultNum: this.InputBox.adultNum,
+            childNum: this.InputBox.childNum,
+            deposite: this.InputBox.deposite,
+            depositePayWay: this.InputBox.depositePayWay,
+            ifFinish: this.InputBox.ifFinish,
+            isReback: this.InputBox.isReback,
+            orderNum: this.InputBox.orderNum,
+            payWay: this.InputBox.payWay,
+            phoneNumber: '',
+            platform: this.InputBox.platform,
+            saler: this.InputBox.saler,
+            time: this.InputBox.time,
+            totalMoney: this.InputBox.totalMoney,
+            _id: this.InputBox._id,
+         })
             .then((res)=>{
                 if (res.status === 200){
                     this.setmodalInputBox(false);
